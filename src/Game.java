@@ -4,7 +4,7 @@ interface Interacao {
   void executar();
 }
 
-// TODO: mostrar nivel de confianca de taka, e "mostrar" ao jogador como isso impacta na historia. e claro toda escolha deve ter uma vantagem e uma desvantagem
+// TODO: e claro toda escolha deve ter uma vantagem e uma desvantagem
 
 public class Game {
   private String resposta = "";
@@ -74,12 +74,17 @@ public class Game {
     System.out.println("- Vinicius");
     System.out.println("Obrigado por jogar Cyberlife!");
 
-    // this.obterRespostaDoJogador();
+    this.obterRespostaDoJogador();
+
+    if (respostaIgualMenu()) {
+      menu();
+    }
 
   }
 
   public void obterRespostaDoJogador() {
     System.out.println("\n");
+    System.out.println("Nivel de confianca "+ nivelDeConfianca+" \n");
     System.out.println("Digite sua resposta: (Digite 'menu' para voltar ao menu.)");
 
     if (!resposta.equalsIgnoreCase("menu")) {
@@ -162,8 +167,8 @@ public class Game {
 
         System.out.println("\nTaka entra na sala e pergunta:");
         System.out.println("\"Tudo bem com você, Nys?\"");
-        System.out.println("1 - Responder amigavelmente");
-        System.out.println("2 - Responder de forma suspeita");
+        System.out.println("1 - Responder amigavelmente (+2 confianca)");
+        System.out.println("2 - Responder de forma suspeita (-2 confianca)");
         System.out.print("Escolha uma opção: ");
 
         obterRespostaDoJogador();
@@ -227,13 +232,14 @@ public class Game {
         } else if (resposta.equalsIgnoreCase("2")) {
           limparTerminal();
           respostaExiste = true;
-          System.out.println("Você pergunta a Taka sobre o arquivo.");
+          System.out.println("Você pergunta a Taka sobre o arquivo.\n");
 
           if (nivelDeConfianca > 5) {
-            System.out.println("Taka hesita, mas responde: \"É apenas um arquivo antigo. Nao se preocupe com isso.\"");
+            System.out.println("(Nivel de confianca maior que 5)\nTaka hesita, mas responde: \"É apenas um arquivo antigo. Nao se preocupe com isso.\"");
           } else {
             System.out.println(
-                "Taka responde friamente: \"Nao tenho informacoes sobre isso.\" Você sente que ele está escondendo algo.");
+                "(Nivel de confianca menor que 5)\nTaka responde friamente: \"Nao tenho informacoes sobre isso.\" Você sente que ele está escondendo algo.");
+                System.out.println("\n-1 confianca");
             nivelDeConfianca -= 1;
           }
 
