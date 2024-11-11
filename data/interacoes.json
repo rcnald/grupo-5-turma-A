@@ -13,7 +13,7 @@
       "efeitosConfianca": [2, -2]
     },
     {
-      "pergunta": "Mais tarde naquela noite, você encontra um arquivo no seu computador com o nome dos seus pais. O arquivo está encriptado.",
+      "pergunta": "Mais tarde naquela noite, você encontra um arquivo no seu computador com o nome dos seus pais. O arquivo está encriptado. Você começa a se perguntar se Taka tem algo a ver com isso.",
       "alternativas": [
         "Tentar hackear o arquivo agora",
         "Perguntar a Taka sobre o arquivo."
@@ -32,6 +32,51 @@
         }
       ],
       "efeitosConfianca": [0, 0]
+    },
+    {
+      "pergunta": "Após o incidente com o arquivo, Taka lhe entrega uma nova mensagem encriptada. Ele diz: \"Achei isso enquanto realizava a manutenção.\" A desconfiança sobre ele aumenta.",
+      "alternativas": [
+        "Ignorar a mensagem e continuar o dia.",
+        "Tentar decifrar a mensagem agora."
+      ],
+      "respostas": [
+        "Você decide ignorar a mensagem, mas a sensação de desconfiança continua a crescer. Algo não está certo com Taka.",
+        "Você tenta decifrar a mensagem, mas a encriptação é complexa. Talvez você precise de mais habilidades para entender o conteúdo."
+      ],
+      "efeitosConfianca": [0, -1]
+    },
+    {
+      "pergunta": "Na manhã seguinte, durante uma investigação no laboratório, você encontra um dispositivo estranho que parece estar vinculado ao sistema de segurança. Taka entra na sala e pergunta o que você está fazendo. Você começa a conectar os pontos.",
+      "alternativas": [
+        "Dizer que está apenas verificando os equipamentos.",
+        "Fazer uma pergunta direta sobre o dispositivo."
+      ],
+      "respostas": [
+        "Você diz que está apenas verificando os equipamentos. Taka parece desconfortável, mas não reage.",
+        {
+          "condicional": {
+            "pergunta": "Você pergunta diretamente sobre o dispositivo.",
+            "alternativas": [
+              "(Nível de confiança maior que 5) Taka responde com um sorriso nervoso: \"É apenas uma peça de reserva, nada importante.\"",
+              "(Nível de confiança menor que 5) Taka responde com um tom frio: \"É um componente irrelevante. Deixe-me em paz.\" Você sente que está escondendo algo."
+            ],
+            "nivelDeConfianca": 5
+          }
+        }
+      ],
+      "efeitosConfianca": [0, -1]
+    },
+    {
+      "pergunta": "Com tantas pistas, você começa a questionar o verdadeiro papel de Taka. Você se pergunta se ele está realmente ao seu lado, ou se está escondendo mais segredos do que imagina.",
+      "alternativas": [
+        "Ignorar os pensamentos e confiar em Taka.",
+        "Investigar mais sobre o passado de Taka."
+      ],
+      "respostas": [
+        "Você decide ignorar os pensamentos e confiar em Taka, por enquanto. Porém, a dúvida ainda está lá, aumentando a cada momento.",
+        "Você começa a investigar o passado de Taka, procurando por pistas que possam esclarecer suas verdadeiras intenções. Você sente que está perto de descobrir algo importante."
+      ],
+      "efeitosConfianca": [1, -2]
     }
   ]
 }

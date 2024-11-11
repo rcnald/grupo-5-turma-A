@@ -1,7 +1,6 @@
 {
   "classpath": [
-    "lib/gson-2.11.0.jar",
-    "out"  // Adicione também o diretório de saída do projeto, onde estão seus `.class` compilados
-]
-
+    "src/lib/*",
+    "dist"
+  ]
 }
