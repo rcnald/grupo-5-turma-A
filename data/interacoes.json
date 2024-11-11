@@ -1,0 +1,37 @@
+{
+  "interacoes": [
+    {
+      "pergunta": "Bem-vindo, Nys!\nDesde a perda dos seus pais, você tem vivido isolado. Seu único companheiro é Taka, seu robô guardião.\nMas algo não parece certo. Aos poucos, você começa a desconfiar que Taka guarda segredos sobre o acidente de seus pais.\nTaka entra na sala e pergunta:\n\"Tudo bem com você, Nys?\"",
+      "alternativas": [
+        "Responder amigavelmente",
+        "Responder de forma suspeita"
+      ],
+      "respostas": [
+        "Você responde amigavelmente, mas, por dentro, continua desconfiando.",
+        "Você responde de forma suspeita. Taka observa, mas não reage."
+      ],
+      "efeitosConfianca": [2, -2]
+    },
+    {
+      "pergunta": "Mais tarde naquela noite, você encontra um arquivo no seu computador com o nome dos seus pais. O arquivo está encriptado.",
+      "alternativas": [
+        "Tentar hackear o arquivo agora",
+        "Perguntar a Taka sobre o arquivo."
+      ],
+      "respostas": [
+        "Você tenta hackear o arquivo, mas percebe que o nível de encriptação é alto demais para suas habilidades atuais. \nVocê precisará estudar mais antes de tentar novamente.",
+        {
+          "condicional": {
+            "pergunta": "Você pergunta a Taka sobre o arquivo.",
+            "alternativas": [
+              "(Nível de confiança maior que 5) Taka hesita, mas responde: \"É apenas um arquivo antigo. Não se preocupe com isso.\"",
+              "(Nível de confiança menor que 5) Taka responde friamente: \"Não tenho informações sobre isso.\" Você sente que ele está escondendo algo."
+            ],
+            "nivelDeConfianca": 5
+          }
+        }
+      ],
+      "efeitosConfianca": [0, 0]
+    }
+  ]
+}

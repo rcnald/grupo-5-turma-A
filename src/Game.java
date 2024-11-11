@@ -1,16 +1,31 @@
+import com.google.gson.Gson;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
-interface Interacao {
+interface Execucao {
   void executar();
 }
 
-// TODO: Fazer desafios, refatorar metodos de Game para conversar melhor com as interacoes e furuta Classe Desafio
+// TODO: Fazer desafios, refatorar metodos de Game para conversar melhor com as
+// interacoes e furuta Classe Desafio
+// Implementar tutorias
 
 public class Game {
   private String resposta = "";
   private int nivelDeConfianca = 5;
 
+  Gson gson = new Gson();
+
   Scanner entrada = new Scanner(System.in);
+
+  public class Interacao {
+    public String pergunta;
+    public String[] alternativas;
+    public Object[] respostas; 
+    public int[] efeitosConfianca;
+  }
 
   public void menu() {
     boolean respostaExiste = false;
@@ -104,7 +119,7 @@ public class Game {
     return respostas.equalsIgnoreCase("n");
   }
 
-  public void confirmarVoltarAoMenu(Interacao interacao) {
+  public void confirmarVoltarAoMenu(Execucao interacao) {
     if (resposta.equalsIgnoreCase("menu")) {
       boolean respostaExiste = false;
 
@@ -161,7 +176,7 @@ public class Game {
     }
   }
 
-  public class InteracaoPadrao implements Interacao {
+  public class InteracaoPadrao implements Execucao {
     private String pergunta;
     private String[] alternativas;
     private Object[] respostas;
@@ -169,12 +184,11 @@ public class Game {
     private int alternativasValidas;
     private boolean respostaDadaPeloUsuarioExiste;
 
-    public InteracaoPadrao(String pergunta, String[] alternativas, Object[] respostas,
-        int[] efeitoColateralDeConfianca) {
-      this.pergunta = pergunta;
-      this.alternativas = alternativas;
-      this.respostas = respostas;
-      this.efeitoColateralDeConfianca = efeitoColateralDeConfianca;
+    public InteracaoPadrao(Interacao interacao) {
+      this.pergunta = interacao.pergunta;
+      this.alternativas = interacao.alternativas;
+      this.respostas = interacao.respostas;
+      this.efeitoColateralDeConfianca = interacao.efeitosConfianca;
       this.alternativasValidas = this.alternativas.length;
     }
 
@@ -250,6 +264,26 @@ public class Game {
     }
   }
 
+  public static List<Interacao> carregarInteracoesDeJSON(String caminhoDoArquivo) {
+    try (FileReader reader = new FileReader(caminhoDoArquivo)) {
+      Gson gson = new Gson();
+      // A estrutura do JSON é um objeto que tem um campo "interacoes" que é uma lista
+      TipoInteracoes tipoInteracoes = gson.fromJson(reader, TipoInteracoes.class);
+      return tipoInteracoes.getInteracoes();
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  private static class TipoInteracoes {
+    private List<Interacao> interacoes;
+
+    public List<Interacao> getInteracoes() {
+      return interacoes;
+    }
+  }
+
   public void instructions() {
     System.out.println(
         "Objetivo: Nys está em busca de informações ocultas sobre o acidente que matou seus pais. Para progredir, ele precisa superar uma série de desafios de programação que o ajudarão a desbloquear arquivos encriptados, entender comandos ocultos e acessar memórias bloqueadas de Taka.\n");
@@ -262,34 +296,14 @@ public class Game {
   }
 
   public void start() {
-    // interacao 1
-    String pergunta = "Bem-vindo, Nys!\nDesde a perda dos seus pais, você tem vivido isolado. Seu único companheiro  é Taka, seu robô guardião.\nMas algo não parece certo. Aos poucos, você começa a desconfiar que Taka  guarda segredos sobre o acidente de seus pais.\nTaka entra na sala e pergunta:\n\"Tudo bem com você, Nys?\"";
-    String[] alternativas = { "Responder amigavelmente", "Responder de forma suspeita" };
-    Object[] respostas = {
-        "Você responde amigavelmente, mas, por dentro, continua desconfiando.",
-        "Você responde de forma suspeita. Taka observa, mas não reage."
-    };
-    int[] efeitosConfianca = { 2, -2 };
 
-    // interacao 2
-    String pergunta2 = "\nMais tarde naquela noite, você encontra um arquivo no seu computador com o  nome dos seus pais. O arquivo está encriptado.";
-    String[] alternativas2 = {
-        "Tentar hackear o arquivo agora",
-        "Perguntar a Taka sobre o arquivo."
-    };
-    Object[] respostas2 = {
-        "Você tenta hackear o arquivo, mas percebe que o nível de encriptacao é alto demais para suas habilidades atuais. \nVocê precisará estudar mais antes de tentar novamente.",
-        new RespostaCondicional(
-            "Você pergunta a Taka sobre o arquivo.",
-            new String[] {
-                "(Nível de confiança maior que 5) Taka hesita, mas responde: \"É apenas um arquivo antigo. Não se preocupe com isso.\"",
-                "(Nível de confiança menor que 5) Taka responde friamente: \"Não tenho informações sobre isso.\" Você sente que ele está escondendo algo."
-            }, 5)
-    };
-    int[] efeitosConfianca2 = { 0, 0 };
+    List<Interacao> interacoes = carregarInteracoesDeJSON("data/interacoes.json");
 
-    InteracaoPadrao primeiraInteracao = new InteracaoPadrao(pergunta, alternativas, respostas, efeitosConfianca);
-    InteracaoPadrao segundaInteracao = new InteracaoPadrao(pergunta2, alternativas2, respostas2, efeitosConfianca2);
+    Interacao interacao1 = interacoes.get(0);
+    Interacao interacao2 = interacoes.get(1);
+
+    InteracaoPadrao primeiraInteracao = new InteracaoPadrao(interacao1);
+    InteracaoPadrao segundaInteracao = new InteracaoPadrao(interacao2);
 
     primeiraInteracao.executar();
     segundaInteracao.executar();
