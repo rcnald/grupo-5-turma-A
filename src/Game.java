@@ -1,10 +1,19 @@
+
+import java.util.List;
 import java.util.Scanner;
 
-interface Interacao {
+import lib.interfaces.Interacao;
+import lib.interfaces.RespostaCondicional;
+import lib.utils.LimparTerminal;
+import lib.utils.ObterInteracoes;
+
+interface Execucao {
   void executar();
 }
 
-// TODO: Fazer desafios, refatorar metodos de Game para conversar melhor com as interacoes e furuta Classe Desafio
+// TODO: Fazer desafios, refatorar metodos de Game para conversar melhor com as
+// interacoes e furuta Classe Desafio
+// Implementar tutorias
 
 public class Game {
   private String resposta = "";
@@ -12,11 +21,105 @@ public class Game {
 
   Scanner entrada = new Scanner(System.in);
 
+  public class InteracaoPadrao implements Execucao {
+    private String pergunta;
+    private String[] alternativas;
+    private Object[] respostas;
+    private int[] efeitoColateralDeConfianca;
+    private int alternativasValidas;
+    private boolean respostaDadaPeloUsuarioExiste;
+
+    public InteracaoPadrao(Interacao interacao) {
+      this.pergunta = interacao.pergunta;
+      this.alternativas = interacao.alternativas;
+      this.respostas = interacao.respostas;
+      this.efeitoColateralDeConfianca = interacao.efeitosConfianca;
+      this.alternativasValidas = this.alternativas.length;
+    }
+
+    @Override
+    public void executar() {
+
+      do {
+        exibirPergunta();
+        exibirAlternativas();
+
+        obterRespostaDoJogador();
+
+        if (respostaIgualMenu()) {
+          confirmarVoltarAoMenu(this);
+          return;
+        }
+
+        alternativaEstaValida();
+        mensagemSeAlternativaForInvalida();
+      } while (!respostaDadaPeloUsuarioExiste);
+
+      LimparTerminal.limpar();
+
+      exibirRespostas();
+      aplicarEfeitosColateraisDeConfianca();
+    }
+
+    public void exibirPergunta() {
+      System.out.println(pergunta);
+    }
+
+    public void exibirAlternativas() {
+      int indice = 1;
+
+      for (String alternativa : alternativas) {
+        System.out.println(indice + ") " + alternativa);
+        indice++;
+      }
+    }
+
+    public void alternativaEstaValida() {
+      try {
+        int respostaInteira = Integer.parseInt(resposta);
+
+        respostaDadaPeloUsuarioExiste = respostaInteira > 0 && respostaInteira <= alternativasValidas;
+      } catch (NumberFormatException e) {
+        respostaDadaPeloUsuarioExiste = false;
+      }
+    }
+
+    public void mensagemSeAlternativaForInvalida() {
+      if (!respostaDadaPeloUsuarioExiste) {
+        LimparTerminal.limpar();
+        System.out.println("Opcao inválida. Tente novamente.");
+      }
+    }
+
+    public void exibirRespostas() {
+      int respostaInteiraIndice = Integer.parseInt(resposta) - 1;
+      Object repostaParaExibir = respostas[respostaInteiraIndice];
+
+
+      if (repostaParaExibir instanceof RespostaCondicional) {
+        System.out.println(((RespostaCondicional) repostaParaExibir).respostaBase);
+        if (nivelDeConfianca > ((RespostaCondicional) repostaParaExibir).nivelDeConfiancaMinimoParaPrimeiraCondicional) {
+          System.out.println(((RespostaCondicional) repostaParaExibir).exibirRespostaCondicionalUm());
+        } else {
+          System.out.println(((RespostaCondicional) repostaParaExibir).exibirRespostaCondicionalDois());
+        }
+      } else if (repostaParaExibir instanceof String) {
+        System.out.println(repostaParaExibir);
+      }
+    }
+
+    public void aplicarEfeitosColateraisDeConfianca() {
+      int respostaInteiraIndice = Integer.parseInt(resposta) - 1;
+
+      nivelDeConfianca += efeitoColateralDeConfianca[respostaInteiraIndice];
+    }
+  }
+
   public void menu() {
     boolean respostaExiste = false;
 
     do {
-      this.limparTerminal();
+      LimparTerminal.limpar();
       System.out.println("Bem vindo ao Cyberlife");
       System.out.println("1) - Instrucoes");
       System.out.println("2) - Jogar");
@@ -50,20 +153,6 @@ public class Game {
           break;
       }
     } while (!respostaExiste);
-  }
-
-  public void limparTerminal() {
-    String os = System.getProperty("os.name").toLowerCase();
-
-    try {
-      if (os.contains("windows")) {
-        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-      } else {
-        new ProcessBuilder("clear").inheritIO().start().waitFor();
-      }
-    } catch (Exception e) {
-      System.out.println("Erro ao limpar a tela: " + e.getMessage());
-    }
   }
 
   public void credits() {
@@ -104,7 +193,7 @@ public class Game {
     return respostas.equalsIgnoreCase("n");
   }
 
-  public void confirmarVoltarAoMenu(Interacao interacao) {
+  public void confirmarVoltarAoMenu(Execucao interacao) {
     if (resposta.equalsIgnoreCase("menu")) {
       boolean respostaExiste = false;
 
@@ -113,14 +202,14 @@ public class Game {
         String confirmacao = entrada.next();
 
         if (respostaPositiva(confirmacao)) {
-          this.limparTerminal();
+          LimparTerminal.limpar();
 
           respostaExiste = true;
           resposta = "";
 
           this.menu();
         } else if (respostaNegativa(confirmacao)) {
-          this.limparTerminal();
+          LimparTerminal.limpar();
 
           respostaExiste = true;
           resposta = "";
@@ -142,114 +231,6 @@ public class Game {
     return resposta.equalsIgnoreCase("menu");
   }
 
-  public class RespostaCondicional {
-    private String respostaBase;
-    private String[] respostasCondicionais;
-    private int nivelDeConfiancaMinimoParaPrimeiraCondicional;
-
-    public RespostaCondicional(String respostaBase, String[] respostasCondicionais,
-        int nivelDeConfiancaMinimoParaPrimeiraCondicional) {
-      this.respostaBase = respostaBase;
-      this.respostasCondicionais = respostasCondicionais;
-      this.nivelDeConfiancaMinimoParaPrimeiraCondicional = nivelDeConfiancaMinimoParaPrimeiraCondicional;
-    }
-
-    public String exibirRespostaCondicional() {
-      int indice = nivelDeConfianca > nivelDeConfiancaMinimoParaPrimeiraCondicional ? 0 : 1;
-      return (respostasCondicionais != null && respostasCondicionais.length > indice) ? respostasCondicionais[indice]
-          : respostaBase;
-    }
-  }
-
-  public class InteracaoPadrao implements Interacao {
-    private String pergunta;
-    private String[] alternativas;
-    private Object[] respostas;
-    private int[] efeitoColateralDeConfianca;
-    private int alternativasValidas;
-    private boolean respostaDadaPeloUsuarioExiste;
-
-    public InteracaoPadrao(String pergunta, String[] alternativas, Object[] respostas,
-        int[] efeitoColateralDeConfianca) {
-      this.pergunta = pergunta;
-      this.alternativas = alternativas;
-      this.respostas = respostas;
-      this.efeitoColateralDeConfianca = efeitoColateralDeConfianca;
-      this.alternativasValidas = this.alternativas.length;
-    }
-
-    @Override
-    public void executar() {
-
-      do {
-        exibirPergunta();
-        exibirAlternativas();
-
-        obterRespostaDoJogador();
-
-        if (respostaIgualMenu()) {
-          confirmarVoltarAoMenu(this);
-          return;
-        }
-
-        alternativaEstaValida();
-        mensagemSeAlternativaForInvalida();
-      } while (!respostaDadaPeloUsuarioExiste);
-
-      limparTerminal();
-
-      exibirRespostas();
-      aplicarEfeitosColateraisDeConfianca();
-    }
-
-    public void exibirPergunta() {
-      System.out.println(pergunta);
-    }
-
-    public void exibirAlternativas() {
-      int indice = 1;
-
-      for (String alternativa : alternativas) {
-        System.out.println(indice + ") " + alternativa);
-        indice++;
-      }
-    }
-
-    public void alternativaEstaValida() {
-      try {
-        int respostaInteira = Integer.parseInt(resposta);
-
-        respostaDadaPeloUsuarioExiste = respostaInteira > 0 && respostaInteira <= alternativasValidas;
-      } catch (NumberFormatException e) {
-        respostaDadaPeloUsuarioExiste = false;
-      }
-    }
-
-    public void mensagemSeAlternativaForInvalida() {
-      if (!respostaDadaPeloUsuarioExiste) {
-        limparTerminal();
-        System.out.println("Opcao inválida. Tente novamente.");
-      }
-    }
-
-    public void exibirRespostas() {
-      int respostaInteiraIndice = Integer.parseInt(resposta) - 1;
-      Object repostaParaExibir = respostas[respostaInteiraIndice];
-
-      if (repostaParaExibir instanceof RespostaCondicional) {
-        System.out.print(((RespostaCondicional) repostaParaExibir).exibirRespostaCondicional());
-      } else if (repostaParaExibir instanceof String) {
-        System.out.println(repostaParaExibir);
-      }
-    }
-
-    public void aplicarEfeitosColateraisDeConfianca() {
-      int respostaInteiraIndice = Integer.parseInt(resposta) - 1;
-
-      nivelDeConfianca += efeitoColateralDeConfianca[respostaInteiraIndice];
-    }
-  }
-
   public void instructions() {
     System.out.println(
         "Objetivo: Nys está em busca de informações ocultas sobre o acidente que matou seus pais. Para progredir, ele precisa superar uma série de desafios de programação que o ajudarão a desbloquear arquivos encriptados, entender comandos ocultos e acessar memórias bloqueadas de Taka.\n");
@@ -262,36 +243,24 @@ public class Game {
   }
 
   public void start() {
-    // interacao 1
-    String pergunta = "Bem-vindo, Nys!\nDesde a perda dos seus pais, você tem vivido isolado. Seu único companheiro  é Taka, seu robô guardião.\nMas algo não parece certo. Aos poucos, você começa a desconfiar que Taka  guarda segredos sobre o acidente de seus pais.\nTaka entra na sala e pergunta:\n\"Tudo bem com você, Nys?\"";
-    String[] alternativas = { "Responder amigavelmente", "Responder de forma suspeita" };
-    Object[] respostas = {
-        "Você responde amigavelmente, mas, por dentro, continua desconfiando.",
-        "Você responde de forma suspeita. Taka observa, mas não reage."
-    };
-    int[] efeitosConfianca = { 2, -2 };
+    List<Interacao> interacoes = ObterInteracoes.obter("data/interacoes.json");
 
-    // interacao 2
-    String pergunta2 = "\nMais tarde naquela noite, você encontra um arquivo no seu computador com o  nome dos seus pais. O arquivo está encriptado.";
-    String[] alternativas2 = {
-        "Tentar hackear o arquivo agora",
-        "Perguntar a Taka sobre o arquivo."
-    };
-    Object[] respostas2 = {
-        "Você tenta hackear o arquivo, mas percebe que o nível de encriptacao é alto demais para suas habilidades atuais. \nVocê precisará estudar mais antes de tentar novamente.",
-        new RespostaCondicional(
-            "Você pergunta a Taka sobre o arquivo.",
-            new String[] {
-                "(Nível de confiança maior que 5) Taka hesita, mas responde: \"É apenas um arquivo antigo. Não se preocupe com isso.\"",
-                "(Nível de confiança menor que 5) Taka responde friamente: \"Não tenho informações sobre isso.\" Você sente que ele está escondendo algo."
-            }, 5)
-    };
-    int[] efeitosConfianca2 = { 0, 0 };
+    Interacao interacao1 = interacoes.get(0);
+    Interacao interacao2 = interacoes.get(1);
+    Interacao interacao3 = interacoes.get(2);
+    Interacao interacao4 = interacoes.get(3);
+    Interacao interacao5 = interacoes.get(4);
 
-    InteracaoPadrao primeiraInteracao = new InteracaoPadrao(pergunta, alternativas, respostas, efeitosConfianca);
-    InteracaoPadrao segundaInteracao = new InteracaoPadrao(pergunta2, alternativas2, respostas2, efeitosConfianca2);
+    InteracaoPadrao primeiraInteracao = new InteracaoPadrao(interacao1);
+    InteracaoPadrao segundaInteracao = new InteracaoPadrao(interacao2);
+    InteracaoPadrao terceiraInteracao = new InteracaoPadrao(interacao3);
+    InteracaoPadrao quartaInteracao = new InteracaoPadrao(interacao4);
+    InteracaoPadrao quintaInteracao = new InteracaoPadrao(interacao5);
 
     primeiraInteracao.executar();
     segundaInteracao.executar();
+    terceiraInteracao.executar();
+    quartaInteracao.executar();
+    quintaInteracao.executar();
   }
 }

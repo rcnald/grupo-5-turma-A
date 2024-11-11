@@ -1,0 +1,6 @@
+{
+  "classpath": [
+    "src/lib/*",
+    "dist"
+  ]
+}
