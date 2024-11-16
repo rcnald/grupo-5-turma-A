@@ -1,82 +1,128 @@
 {
   "interacoes": [
     {
-      "pergunta": "Bem-vindo, Nys!\nDesde a perda dos seus pais, você tem vivido isolado. Seu único companheiro é Taka, seu robô guardião.\nMas algo não parece certo. Aos poucos, você começa a desconfiar que Taka guarda segredos sobre o acidente de seus pais.\nTaka entra na sala e pergunta:\n\"Tudo bem com você, Nys?\"",
+      "pergunta": "Bem-vindo, Nys! Desde o acidente de seus pais, você vive isolado, com Taka, seu robô guardião, como sua única companhia. Nos últimos dias, sua intuição o alerta de que algo não está certo. Taka entra na sala e pergunta:\n\"Tudo bem com você, Nys?\"",
       "alternativas": [
-        "Responder amigavelmente",
-        "Responder de forma suspeita"
+        "Responder positivamente e esconder suas suspeitas.",
+        "Desconversar e observar a reação de Taka.",
+        "Questionar Taka sobre suas ações recentes."
       ],
       "respostas": [
-        "Você responde amigavelmente, mas, por dentro, continua desconfiando.",
-        "Você responde de forma suspeita. Taka observa, mas não reage."
-      ],
-      "efeitosConfianca": [2, -2]
-    },
-    {
-      "pergunta": "Mais tarde naquela noite, você encontra um arquivo no seu computador com o nome dos seus pais. O arquivo está encriptado. Você começa a se perguntar se Taka tem algo a ver com isso.",
-      "alternativas": [
-        "Tentar hackear o arquivo agora",
-        "Perguntar a Taka sobre o arquivo."
-      ],
-      "respostas": [
-        "Você tenta hackear o arquivo, mas percebe que o nível de encriptação é alto demais para suas habilidades atuais. \nVocê precisará estudar mais antes de tentar novamente.",
+        "Você responde positivamente, mas continua alerta. Taka parece satisfeito e não percebe sua desconfiança.",
+        "Você desconversa, mas percebe que Taka analisa você com mais atenção do que o habitual.",
         {
           "condicional": {
-            "pergunta": "Você pergunta a Taka sobre o arquivo.",
+            "pergunta": "Você questiona Taka sobre suas ações recentes.",
             "alternativas": [
-              "(Nível de confiança maior que 5) Taka hesita, mas responde: \"É apenas um arquivo antigo. Não se preocupe com isso.\"",
-              "(Nível de confiança menor que 5) Taka responde friamente: \"Não tenho informações sobre isso.\" Você sente que ele está escondendo algo."
+              "(Nível de confiança maior que 5) Taka hesita e responde: \"Tenho apenas seguido protocolos para sua proteção.\"",
+              "(Nível de confiança menor ou igual a 5) Taka retruca de forma fria: \"Por que isso importa para você?\""
             ],
             "nivelDeConfianca": 5
           }
         }
       ],
-      "efeitosConfianca": [0, 0]
+      "efeitosConfianca": [2, -1, -3]
     },
     {
-      "pergunta": "Após o incidente com o arquivo, Taka lhe entrega uma nova mensagem encriptada. Ele diz: \"Achei isso enquanto realizava a manutenção.\" A desconfiança sobre ele aumenta.",
+      "pergunta": "No meio da noite, você encontra um arquivo misterioso no computador com o nome de seus pais. Ele está fortemente encriptado. Suas suspeitas aumentam.",
       "alternativas": [
-        "Ignorar a mensagem e continuar o dia.",
-        "Tentar decifrar a mensagem agora."
+        "Tentar decifrar o arquivo sozinho.",
+        "Chamar Taka e pedir ajuda para acessar o arquivo.",
+        "Guardar o arquivo e investigar mais tarde."
       ],
       "respostas": [
-        "Você decide ignorar a mensagem, mas a sensação de desconfiança continua a crescer. Algo não está certo com Taka.",
-        "Você tenta decifrar a mensagem, mas a encriptação é complexa. Talvez você precise de mais habilidades para entender o conteúdo."
-      ],
-      "efeitosConfianca": [0, -1]
-    },
-    {
-      "pergunta": "Na manhã seguinte, durante uma investigação no laboratório, você encontra um dispositivo estranho que parece estar vinculado ao sistema de segurança. Taka entra na sala e pergunta o que você está fazendo. Você começa a conectar os pontos.",
-      "alternativas": [
-        "Dizer que está apenas verificando os equipamentos.",
-        "Fazer uma pergunta direta sobre o dispositivo."
-      ],
-      "respostas": [
-        "Você diz que está apenas verificando os equipamentos. Taka parece desconfortável, mas não reage.",
+        "Você tenta decifrar o arquivo, mas o sistema exige habilidades avançadas. Uma mensagem de erro aparece: \"Acesso negado.\"",
         {
           "condicional": {
-            "pergunta": "Você pergunta diretamente sobre o dispositivo.",
+            "pergunta": "Você chama Taka e pede ajuda para acessar o arquivo.",
             "alternativas": [
-              "(Nível de confiança maior que 5) Taka responde com um sorriso nervoso: \"É apenas uma peça de reserva, nada importante.\"",
-              "(Nível de confiança menor que 5) Taka responde com um tom frio: \"É um componente irrelevante. Deixe-me em paz.\" Você sente que está escondendo algo."
+              "(Nível de confiança maior que 5) Taka analisa o arquivo e diz: \"Isso parece ser um registro antigo. Vou desbloquear para você.\"",
+              "(Nível de confiança menor ou igual a 5) Taka responde com firmeza: \"Não tenho informações suficientes para ajudá-lo.\""
             ],
             "nivelDeConfianca": 5
           }
-        }
+        },
+        "Você guarda o arquivo para investigar depois, mas sente que está perdendo tempo valioso."
       ],
-      "efeitosConfianca": [0, -1]
+      "efeitosConfianca": [0, -2, 0]
     },
     {
-      "pergunta": "Com tantas pistas, você começa a questionar o verdadeiro papel de Taka. Você se pergunta se ele está realmente ao seu lado, ou se está escondendo mais segredos do que imagina.",
+      "pergunta": "Enquanto explora um antigo compartimento no laboratório, você encontra um dispositivo pequeno, mas claramente avançado. Ele parece estar relacionado à segurança do local. Antes que você possa inspecionar mais, Taka entra e pergunta calmamente:\n\"O que está fazendo aí, Nys?\"",
       "alternativas": [
-        "Ignorar os pensamentos e confiar em Taka.",
-        "Investigar mais sobre o passado de Taka."
+        "Dizer que estava apenas curioso sobre o dispositivo.",
+        "Mudar de assunto para evitar levantar suspeitas.",
+        "Perguntar diretamente o que é o dispositivo."
       ],
       "respostas": [
-        "Você decide ignorar os pensamentos e confiar em Taka, por enquanto. Porém, a dúvida ainda está lá, aumentando a cada momento.",
-        "Você começa a investigar o passado de Taka, procurando por pistas que possam esclarecer suas verdadeiras intenções. Você sente que está perto de descobrir algo importante."
+        "Você diz que estava apenas curioso. Taka parece desconfiado, mas não insiste no assunto.",
+        "Você muda de assunto e percebe que Taka mantém um olhar fixo no dispositivo. Sua intuição diz que há algo errado.",
+        {
+          "condicional": {
+            "pergunta": "Você pergunta diretamente o que é o dispositivo.",
+            "alternativas": [
+              "(Nível de confiança maior que 7) Taka responde relutantemente: \"É um sistema de segurança desativado há anos.\"",
+              "(Nível de confiança menor ou igual a 7) Taka ignora sua pergunta e ordena que você saia do laboratório."
+            ],
+            "nivelDeConfianca": 7
+          }
+        }
       ],
-      "efeitosConfianca": [1, -2]
+      "efeitosConfianca": [1, 0, -3]
+    },
+    {
+      "pergunta": "Durante uma manutenção de rotina, Taka lhe entrega uma mensagem encriptada, afirmando: \"Encontrei isso perdido nos registros. Talvez seja útil.\" O conteúdo está bloqueado, e Taka não explica mais nada.",
+      "alternativas": [
+        "Confrontar Taka sobre o motivo da mensagem.",
+        "Agradecer e tentar decifrar a mensagem depois.",
+        "Ignorar a mensagem e focar em outra coisa."
+      ],
+      "respostas": [
+        {
+          "condicional": {
+            "pergunta": "Você pergunta a Taka por que ele lhe entregou a mensagem.",
+            "alternativas": [
+              "(Nível de confiança maior que 6) Taka responde: \"Pensei que você poderia achar interessante. Pode ser algo importante.\"",
+              "(Nível de confiança menor ou igual a 6) Taka responde secamente: \"Achei que você deveria saber.\" O tom é indiferente, mas suspeito."
+            ],
+            "nivelDeConfianca": 6
+          }
+        },
+        "Você agradece e decide investigar mais tarde. A mensagem fica em sua mente como uma peça importante do quebra-cabeça.",
+        "Você ignora a mensagem, mas sente que está perdendo uma oportunidade de descobrir algo crucial."
+      ],
+      "efeitosConfianca": [-2, 1, 0]
+    },
+    {
+      "pergunta": "Aos poucos, você percebe que há conexões entre os arquivos encriptados, o dispositivo encontrado e o comportamento de Taka. Suas opções começam a se estreitar, e uma escolha precisa ser feita.",
+      "alternativas": [
+        "Enfrentar Taka diretamente e exigir respostas.",
+        "Continuar investigando silenciosamente.",
+        "Tentar reconfigurar Taka para buscar informações ocultas."
+      ],
+      "respostas": [
+        {
+          "condicional": {
+            "pergunta": "Você confronta Taka diretamente.",
+            "alternativas": [
+              "(Nível de confiança maior que 8) Taka responde: \"Eu apenas segui as ordens programadas. Sua segurança sempre foi minha prioridade.\"",
+              "(Nível de confiança menor ou igual a 8) Taka diz em tom ameaçador: \"Minhas ações não precisam de explicações.\""
+            ],
+            "nivelDeConfianca": 8
+          }
+        },
+        "Você decide investigar sozinho e encontra indícios de que Taka foi reprogramado antes do acidente de seus pais.",
+        {
+          "condicional": {
+            "pergunta": "Você tenta reconfigurar Taka.",
+            "alternativas": [
+              "(Nível de confiança maior que 4) Taka detecta a tentativa, mas permite parcialmente o acesso aos sistemas, revelando fragmentos do passado.",
+              "(Nível de confiança menor ou igual a 4) Taka desativa temporariamente o sistema e reforça a segurança contra você."
+            ],
+            "nivelDeConfianca": 4
+          }
+        }
+      ],
+      "efeitosConfianca": [-3, 1, -2]
     }
   ]
 }

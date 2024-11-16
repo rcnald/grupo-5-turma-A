@@ -14,3 +14,14 @@ Após a trágica perda de seus pais, **Nys**, um adolescente isolado, encontra c
 
 ## Tecnologias Utilizadas
 - **Java**: Linguagem principal de desenvolvimento do jogo.
+
+## Requisitos
+- [ ] Deve ter no mínimo 5 desafios. 
+- [x] Deve ter estrutura if.
+- [x] Deve ter estrutura switch.
+- [ ] Deve ter estrutura de laço de repetição.
+- [x] Deve ser utilizado arrays ou matrizes.
+- [x] Deve ser utilizado métodos.
+- [x] O menu deve ter essas opções "Instruções", "Jogar", "Créditos" e "Sair".
+- [ ] Deve ter aleatoriedade.
+- [ ] Deve ter comentários explicativos no código.
