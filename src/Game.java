@@ -45,6 +45,8 @@ public class Game {
         exibirAlternativas();
 
         obterRespostaDoJogador();
+        //respostas - servem para ver como  o usuario age perante as perguntas feitas, e cada pergunta tem o seu nivel de confiança e de acordo com cada resposrtas eles pode aumentar ou diminuir.
+
 
         if (respostaIgualMenu()) {
           confirmarVoltarAoMenu(this);
@@ -56,6 +58,7 @@ public class Game {
       } while (!respostaDadaPeloUsuarioExiste);
 
       LimparTerminal.limpar();
+      //codigo de confiaca + desafios -  os desafios podem ser mais faceis ou dificeis dependendo do nivel de confianca adquiridos pelo jogador, atraves de cada resposta dada durante o jogo.
 
       exibirRespostas();
       aplicarEfeitosColateraisDeConfianca();
