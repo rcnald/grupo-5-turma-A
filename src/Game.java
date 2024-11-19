@@ -1,5 +1,6 @@
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import lib.interfaces.Interacao;
@@ -94,7 +95,6 @@ public class Game {
     public void exibirRespostas() {
       int respostaInteiraIndice = Integer.parseInt(resposta) - 1;
       Object repostaParaExibir = respostas[respostaInteiraIndice];
-
 
       if (repostaParaExibir instanceof RespostaCondicional) {
         System.out.println(((RespostaCondicional) repostaParaExibir).respostaBase);
@@ -242,6 +242,64 @@ public class Game {
         "Progresso e Recompensas: A cada desafio concluído, você desbloqueia novos fragmentos de informação sobre o acidente e se aproxima da verdade. Resolva os desafios para avançar e explorar novas partes da história.\n");
   }
 
+  class Desafio1 implements Execucao {
+    private final Scanner scanner = new Scanner(System.in);
+
+    @Override
+    public void executar() {
+      System.out.println("\nDesafio 1: Tentar se lembrar de seu passado.");
+      System.out.println("""
+          Contexto: Você está tentando acessar memórias do passado armazenadas em seu subconsciente.
+          Seu objetivo é revisar essas memórias usando o laço de repetição correto.
+          """);
+
+      String[] alternativas = {
+          "1. for (String memoria : memoriaPassado) { System.out.println(memoria); }",
+          "2. while (memoriaPassado.length > 0) { System.out.println(memoria); }",
+          "3. do { System.out.println(memoriaPassado); } while (false);"
+      };
+
+      int tentativas = 0;
+      boolean acertou = false;
+
+      while (tentativas < 5 && !acertou) {
+        System.out.println("\nAlternativas:");
+        for (String alternativa : alternativas) {
+          System.out.println(alternativa);
+        }
+
+        System.out.print("\nQual código você escolhe? (1/2/3): ");
+        int escolha = scanner.nextInt();
+
+        if (escolha == 1) {
+          acertou = true;
+          System.out.println("\nCorreto! Você usou um 'for-each' para explorar as memórias.");
+          System.out.println("Explicação: O 'for-each' é ideal para percorrer coleções, como arrays ou listas.");
+
+          String[] memoriaPassado = { "Brincando com meus pais", "Um acidente", "Uma explosão" };
+          System.out.println("\nRevisando as memórias:");
+          for (String memoria : memoriaPassado) {
+            System.out.println("Memória encontrada: " + memoria);
+          }
+        } else {
+          tentativas++;
+          if (escolha == 2) {
+            System.out.println("\nErrado! 'while' é útil para condições genéricas, mas não é ideal aqui.");
+          } else if (escolha == 3) {
+            System.out.println("\nErrado! 'do-while' executa ao menos uma vez, mas não é prático para este caso.");
+          }
+
+          if (tentativas < 5) {
+            System.out
+                .println("Dica: Qual laço percorre cada elemento de um array sem que você precise gerenciar índices?");
+          } else {
+            System.out.println("\nVocê atingiu o limite de tentativas! O desafio falhou.");
+          }
+        }
+      }
+    }
+  }
+
   public void start() {
     List<Interacao> interacoes = ObterInteracoes.obter("data/interacoes.json");
 
@@ -262,5 +320,9 @@ public class Game {
     terceiraInteracao.executar();
     quartaInteracao.executar();
     quintaInteracao.executar();
+
+    Execucao desafio1 = new Desafio1();
+
+    desafio1.executar();
   }
 }
