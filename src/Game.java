@@ -46,8 +46,6 @@ public class Game {
         exibirAlternativas();
 
         obterRespostaDoJogador();
-        //respostas - servem para ver como  o usuario age perante as perguntas feitas, e cada pergunta tem o seu nivel de confiança e de acordo com cada resposrtas eles pode aumentar ou diminuir.
-
 
         if (respostaIgualMenu()) {
           confirmarVoltarAoMenu(this);
@@ -59,7 +57,6 @@ public class Game {
       } while (!respostaDadaPeloUsuarioExiste);
 
       LimparTerminal.limpar();
-      //codigo de confiaca + desafios -  os desafios podem ser mais faceis ou dificeis dependendo do nivel de confianca adquiridos pelo jogador, atraves de cada resposta dada durante o jogo.
 
       exibirRespostas();
       aplicarEfeitosColateraisDeConfianca();
@@ -245,11 +242,134 @@ public class Game {
         "Progresso e Recompensas: A cada desafio concluído, você desbloqueia novos fragmentos de informação sobre o acidente e se aproxima da verdade. Resolva os desafios para avançar e explorar novas partes da história.\n");
   }
 
-  class Desafio1 implements Execucao {
-    private final Scanner scanner = new Scanner(System.in);
+  public class TutorialDesafio1 implements Execucao {
 
     @Override
     public void executar() {
+      Scanner entrada = new Scanner(System.in);
+
+      System.out.println("\n--- Tutorial: Revisando Memórias do Passado ---");
+      System.out.println("""
+          Contexto: No Desafio 1, você precisa acessar memórias armazenadas em um array chamado 'memoriaPassado'.
+          Essas memórias devem ser revisadas utilizando o laço de repetição mais adequado.
+          """);
+
+      boolean continuar = true;
+
+      while (continuar) {
+        System.out.println("Escolha uma alternativa para aprender mais:");
+        System.out.println("1. for-each");
+        System.out.println("2. while");
+        System.out.println("3. do-while");
+        System.out.println("4. Sair do tutorial");
+        System.out.print("Opção: ");
+        int escolha = entrada.nextInt();
+
+        switch (escolha) {
+          case 1:
+            explicarForEach();
+            break;
+
+          case 2:
+            explicarWhile();
+            break;
+
+          case 3:
+            explicarDoWhile();
+            break;
+          case 4:
+            System.out.println("\nSaindo do tutorial. Boa sorte no desafio!");
+            continuar = false;
+            break;
+          default:
+            System.out.println("\nOpção inválida. Tente novamente.");
+        }
+
+        if (continuar) {
+          System.out.println("\n--- Fim da explicação ---\n");
+        }
+      }
+    }
+
+    private void explicarForEach() {
+      System.out.println("\n--- Alternativa 1: for-each ---");
+      System.out.println(
+          """
+              O 'for-each' é uma forma simplificada de iterar por todos os elementos de uma coleção (como um array ou lista).
+              Ele é ideal quando você não precisa acessar os índices diretamente e só quer processar cada elemento.
+
+              Sintaxe:
+              for (Tipo elemento : Colecao) {
+                  // Operações com elemento
+              }
+              """);
+
+      String[] memoriaPassado = { "Brincando com meus pais", "Um acidente", "Uma explosão" };
+      System.out.println("\nExemplo no contexto do desafio:");
+      System.out.println("for (String memoria : memoriaPassado) {");
+      System.out.println("    System.out.println(memoria);");
+      System.out.println("}\n");
+      System.out.println("Resultado:");
+      for (String memoria : memoriaPassado) {
+        System.out.println("Memória encontrada: " + memoria);
+      }
+    }
+
+    private void explicarWhile() {
+      System.out.println("\n--- Alternativa 2: while ---");
+      System.out.println("""
+          O 'while' é usado quando não sabemos a quantidade exata de iterações, mas sabemos a condição para parar.
+          Ele verifica a condição antes de executar o bloco de código, e só continua enquanto a condição for verdadeira.
+
+          Sintaxe:
+          while (condicao) {
+              // Operações
+          }
+          """);
+
+      System.out.println(
+          "No contexto do desafio, o 'while' não é a melhor escolha, porque você já conhece o tamanho do array.");
+      System.out.println("""
+          Exemplo inadequado:
+          while (memoriaPassado.length > 0) {
+              // O código acima está errado porque 'memoriaPassado.length' não muda.
+          }
+          """);
+      System.out.println("Dica: Use o 'while' quando estiver lidando com condições dinâmicas e desconhecidas.");
+    }
+
+    private void explicarDoWhile() {
+      System.out.println("\n--- Alternativa 3: do-while ---");
+      System.out.println("""
+          O 'do-while' é semelhante ao 'while', mas a condição é verificada após a execução do bloco.
+          Isso significa que o código será executado pelo menos uma vez, independentemente da condição.
+
+          Sintaxe:
+          do {
+              // Operações
+          } while (condicao);
+          """);
+
+      System.out.println(
+          "No contexto do desafio, o 'do-while' não é adequado porque você não precisa garantir uma execução inicial.");
+      System.out.println("""
+          Exemplo inadequado:
+          do {
+              System.out.println(memoriaPassado);
+          } while (false);
+          """);
+      System.out.println(
+          "Dica: Use o 'do-while' quando quiser garantir ao menos uma execução antes de verificar a condição.");
+    }
+  }
+
+  class Desafio1 implements Execucao {
+    private final Scanner entrada = new Scanner(System.in);
+
+    @Override
+    public void executar() {
+      LimparTerminal.limpar();
+
       System.out.println("\nDesafio 1: Tentar se lembrar de seu passado.");
       System.out.println("""
           Contexto: Você está tentando acessar memórias do passado armazenadas em seu subconsciente.
@@ -262,17 +382,19 @@ public class Game {
           "3. do { System.out.println(memoriaPassado); } while (false);"
       };
 
+      int tentativasMaximas = calcularTentativas();
       int tentativas = 0;
       boolean acertou = false;
 
-      while (tentativas < 5 && !acertou) {
+      while (tentativas < tentativasMaximas && !acertou) {
+        System.out.println("\nNível de confiança: " + nivelDeConfianca);
         System.out.println("\nAlternativas:");
         for (String alternativa : alternativas) {
           System.out.println(alternativa);
         }
 
-        System.out.print("\nQual código você escolhe? (1/2/3): ");
-        int escolha = scanner.nextInt();
+        System.out.print("\nQual código você escolhe?");
+        int escolha = entrada.nextInt();
 
         if (escolha == 1) {
           acertou = true;
@@ -286,20 +408,48 @@ public class Game {
           }
         } else {
           tentativas++;
-          if (escolha == 2) {
-            System.out.println("\nErrado! 'while' é útil para condições genéricas, mas não é ideal aqui.");
-          } else if (escolha == 3) {
-            System.out.println("\nErrado! 'do-while' executa ao menos uma vez, mas não é prático para este caso.");
-          }
+          fornecerFeedback(escolha, tentativasMaximas - tentativas);
 
-          if (tentativas < 5) {
-            System.out
-                .println("Dica: Qual laço percorre cada elemento de um array sem que você precise gerenciar índices?");
-          } else {
+          if (tentativas == tentativasMaximas) {
             System.out.println("\nVocê atingiu o limite de tentativas! O desafio falhou.");
           }
         }
       }
+
+      if (acertou) {
+        System.out.println("\nParabéns! Você concluiu o desafio com sucesso.");
+      }
+    }
+
+    private int calcularTentativas() {
+      if (nivelDeConfianca >= 7) {
+        System.out.println("\nVocê está muito confiante! Receberá 3 tentativas.");
+        return 3;
+      } else if (nivelDeConfianca >= 5) {
+        System.out.println("\nConfiança estável. Receberá 2 tentativas.");
+        return 2;
+      } else {
+        System.out.println("\nConfiança baixa! Você terá apenas 1 tentativa1.");
+        return 1;
+      }
+    }
+
+    private void fornecerFeedback(int escolha, int tentativasRestantes) {
+      if (escolha == 2) {
+        System.out.println("\nErrado! 'while' é útil para condições genéricas, mas não é ideal aqui.");
+      } else if (escolha == 3) {
+        System.out.println("\nErrado! 'do-while' executa ao menos uma vez, mas não é prático para este caso.");
+      }
+
+      if (nivelDeConfianca >= 7) {
+        System.out.println("Dica adicional: Pense em um laço que percorre todos os elementos de forma automática.");
+      } else if (nivelDeConfianca >= 5) {
+        System.out.println("Dica: Qual laço percorre elementos sem precisar de índices?");
+      } else {
+        System.out.println("Sem dicas disponíveis. Boa sorte!");
+      }
+
+      System.out.println("Tentativas restantes: " + tentativasRestantes);
     }
   }
 
@@ -324,8 +474,10 @@ public class Game {
     quartaInteracao.executar();
     quintaInteracao.executar();
 
+    Execucao tutorial = new TutorialDesafio1();
     Execucao desafio1 = new Desafio1();
 
+    tutorial.executar();
     desafio1.executar();
   }
 }

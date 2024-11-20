@@ -8,7 +8,6 @@
         "Questionar Taka sobre suas ações recentes."
       ],
       "respostas"
-      //respostas - servem para ver como  o usuario age perante as perguntas feitas, e cada pergunta tem o seu nivel de confiança e de acordo com cada resposrtas ele pode aumentar ou diminuir.
 : [
         "Você responde positivamente, mas continua alerta. Taka parece satisfeito e não percebe sua desconfiança.",
         "Você desconversa, mas percebe que Taka analisa você com mais atenção do que o habitual.",
@@ -19,7 +18,6 @@
               "(Nível de confiança maior que 5) Taka hesita e responde: \"Tenho apenas seguido protocolos para sua proteção.\"",
               "(Nível de confiança menor ou igual a 5) Taka retruca de forma fria: \"Por que isso importa para você?\""
             ],
-            //codigo de confiaca + desafios -  os desafios poderam ser mais faceis ou dificeis dependendo do nivel de confianca adquiridos pelo jogador atraves de cada resposta dada durante o jogo.
             "nivelDeConfianca": 5
           }
         }
