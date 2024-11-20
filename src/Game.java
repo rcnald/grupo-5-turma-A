@@ -19,6 +19,11 @@ interface Execucao {
 public class Game {
   private String resposta = "";
   private int nivelDeConfianca = 5;
+  private boolean acertoDesafioUm;
+  private boolean acertoDesafioDois;
+  private boolean acertoDesafioTres;
+  private boolean acertoDesafioQuatro;
+  private boolean acertoDesafioCinco;
 
   Scanner entrada = new Scanner(System.in);
 
@@ -398,6 +403,7 @@ public class Game {
 
         if (escolha == 1) {
           acertou = true;
+          acertoDesafioUm = true;
           System.out.println("\nCorreto! Você usou um 'for-each' para explorar as memórias.");
           System.out.println("Explicação: O 'for-each' é ideal para percorrer coleções, como arrays ou listas.");
 
@@ -633,6 +639,7 @@ public class Game {
 
         if (escolha == 2) {
           acertou = true;
+          acertoDesafioDois = true;
           simularDescriptografia();
           System.out.println("\nCorreto! O laço 'do/while' garantiu que o código fosse executado pelo menos uma vez.");
           System.out.println("Arquivo descriptografado com sucesso!");
@@ -878,6 +885,7 @@ public class Game {
 
         if (escolha == 2) {
           acertou = true;
+          acertoDesafioTres = true;
           System.out.println("\nCorreto! O 'switch' permite estruturar opções de forma clara e eficiente.");
           System.out.println("Taka hesita, mas responde: 'Não sei de nada sobre o acidente.'");
           nivelDeConfianca += 2; // Incremento na confiança por acertar.
@@ -964,7 +972,7 @@ public class Game {
 
     tutorial2.executar();
     desafio2.executar();
-    
+
     tutorial3.executar();
     desafio3.executar();
   }
