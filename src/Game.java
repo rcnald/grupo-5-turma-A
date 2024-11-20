@@ -701,6 +701,236 @@ public class Game {
     }
   }
 
+  public class TutorialDesafio3 implements Execucao {
+
+    @Override
+    public void executar() {
+      Scanner entrada = new Scanner(System.in);
+
+      System.out.println("\n--- Tutorial: Estruturando Múltiplas Escolhas ---");
+      System.out.println("""
+          Contexto: No Desafio 3, você precisa estruturar múltiplas opções de maneira clara e eficiente.
+          Para isso, é necessário escolher a estrutura de controle ideal para gerenciar várias alternativas,
+          garantindo que cada escolha execute o bloco de código correto.
+          """);
+
+      boolean continuar = true;
+
+      while (continuar) {
+        System.out.println("Escolha uma alternativa para aprender mais:");
+        System.out.println("1. if-else");
+        System.out.println("2. switch");
+        System.out.println("3. for");
+        System.out.println("4. Sair do tutorial");
+        System.out.print("Opção: ");
+        int escolha = entrada.nextInt();
+
+        switch (escolha) {
+          case 1:
+            explicarIfElse();
+            break;
+
+          case 2:
+            explicarSwitch();
+            break;
+
+          case 3:
+            explicarFor();
+            break;
+
+          case 4:
+            System.out.println("\nSaindo do tutorial. Boa sorte no desafio!");
+            continuar = false;
+            break;
+
+          default:
+            System.out.println("\nOpção inválida. Tente novamente.");
+        }
+
+        if (continuar) {
+          System.out.println("\n--- Fim da explicação ---\n");
+        }
+      }
+    }
+
+    private void explicarIfElse() {
+      System.out.println("\n--- Alternativa 1: if-else ---");
+      System.out.println("""
+          A estrutura 'if-else' é usada para avaliar condições booleanas e executar diferentes blocos de código
+          com base no resultado. Embora seja versátil, pode ficar confusa ao lidar com muitas condições.
+
+          Sintaxe:
+          if (condicao) {
+              // Código se a condição for verdadeira
+          } else if (outraCondicao) {
+              // Código se outra condição for verdadeira
+          } else {
+              // Código se nenhuma condição for verdadeira
+          }
+          """);
+
+      System.out.println("Exemplo no contexto do desafio:");
+      System.out.println("""
+          if (escolha == 1) {
+              System.out.println("Você escolheu a opção 1.");
+          } else if (escolha == 2) {
+              System.out.println("Você escolheu a opção 2.");
+          } else {
+              System.out.println("Opção inválida.");
+          }
+          """);
+
+      System.out.println("Limitação: O 'if-else' pode se tornar difícil de manter quando há muitas condições.");
+    }
+
+    private void explicarSwitch() {
+      System.out.println("\n--- Alternativa 2: switch ---");
+      System.out.println("""
+          A estrutura 'switch' é ideal para lidar com múltiplas condições baseadas em valores fixos.
+          É mais legível e organizada que 'if-else' em cenários com muitas opções.
+
+          Sintaxe:
+          switch (variavel) {
+              case valor1:
+                  // Código para valor1
+                  break;
+              case valor2:
+                  // Código para valor2
+                  break;
+              default:
+                  // Código se nenhum caso corresponder
+          }
+          """);
+
+      System.out.println("Exemplo no contexto do desafio:");
+      System.out.println("""
+          switch (escolha) {
+              case 1:
+                  System.out.println("Você escolheu a opção 1.");
+                  break;
+              case 2:
+                  System.out.println("Você escolheu a opção 2.");
+                  break;
+              default:
+                  System.out.println("Opção inválida.");
+          }
+          """);
+
+      System.out.println("Vantagem: O 'switch' organiza melhor múltiplas condições, especialmente com valores fixos.");
+    }
+
+    private void explicarFor() {
+      System.out.println("\n--- Alternativa 3: for ---");
+      System.out.println("""
+          O 'for' é usado para iterar sobre um conjunto de elementos ou executar um bloco de código
+          um número fixo de vezes. É útil para iterações controladas, mas não é ideal para escolhas dinâmicas.
+
+          Sintaxe:
+          for (inicializacao; condicao; incremento) {
+              // Código a ser executado
+          }
+          """);
+
+      System.out.println("Exemplo no contexto do desafio:");
+      System.out.println("""
+          for (int i = 0; i < 3; i++) {
+              System.out.println("Opção " + (i + 1) + ": Alguma explicação.");
+          }
+          """);
+
+      System.out.println("Limitação: O 'for' não é adequado para tomar decisões baseadas em valores específicos.");
+    }
+  }
+
+  class Desafio3 implements Execucao {
+    private final Scanner entrada = new Scanner(System.in);
+
+    @Override
+    public void executar() {
+      LimparTerminal.limpar();
+
+      System.out.println("\nDesafio 3: Perguntar a Taka sobre o acidente.");
+      System.out.println("""
+          Contexto: Você decide confrontar Taka sobre o acidente que tirou a vida dos seus pais.
+          Para isso, é necessário usar o código ideal para estruturar múltiplas opções de forma clara e eficiente.
+          """);
+      System.out.println("Dica inicial: Qual estrutura de controle é mais adequada para múltiplas escolhas?");
+
+      String[] alternativas = {
+          "1. if (escolha == 1) { ... } else if (escolha == 2) { ... }",
+          "2. switch (escolha) { case 1: ...; break; }",
+          "3. for (int i = 0; i < perguntas.length; i++) { ... }"
+      };
+
+      int tentativasMaximas = calcularTentativas();
+      int tentativas = 0;
+      boolean acertou = false;
+
+      while (tentativas < tentativasMaximas && !acertou) {
+        System.out.println("\nNível de confiança: " + nivelDeConfianca);
+        System.out.println("\nAlternativas:");
+        for (String alternativa : alternativas) {
+          System.out.println(alternativa);
+        }
+
+        System.out.print("\nQual código você escolhe?: ");
+        int escolha = entrada.nextInt();
+
+        if (escolha == 2) {
+          acertou = true;
+          System.out.println("\nCorreto! O 'switch' permite estruturar opções de forma clara e eficiente.");
+          System.out.println("Taka hesita, mas responde: 'Não sei de nada sobre o acidente.'");
+          nivelDeConfianca += 2; // Incremento na confiança por acertar.
+        } else {
+          tentativas++;
+          fornecerFeedback(escolha, tentativasMaximas - tentativas);
+
+          if (tentativas == tentativasMaximas) {
+            System.out.println("\nVocê atingiu o limite de tentativas! O desafio falhou.");
+            System.out.println("Taka permanece em silêncio. Você perdeu a chance de obter informações.");
+            nivelDeConfianca -= 1; // Redução na confiança por falhar.
+          }
+        }
+      }
+
+      if (acertou) {
+        System.out.println("\nParabéns! Você concluiu o desafio com sucesso.");
+      }
+    }
+
+    private int calcularTentativas() {
+      if (nivelDeConfianca >= 7) {
+        System.out.println("\nVocê está muito confiante! Receberá 3 tentativas.");
+        return 3;
+      } else if (nivelDeConfianca >= 5) {
+        System.out.println("\nConfiança estável. Receberá 2 tentativas.");
+        return 2;
+      } else {
+        System.out.println("\nConfiança baixa! Você terá apenas 1 tentativa.");
+        return 1;
+      }
+    }
+
+    private void fornecerFeedback(int escolha, int tentativasRestantes) {
+      if (escolha == 1) {
+        System.out.println(
+            "\nErrado! O 'if/else' pode ser usado, mas não é a solução mais clara para múltiplas escolhas.");
+      } else if (escolha == 3) {
+        System.out.println("\nErrado! O 'for' é usado para iterações fixas, mas não é ideal para este caso.");
+      }
+
+      if (nivelDeConfianca >= 7) {
+        System.out.println("Dica adicional: Use uma estrutura que organiza bem várias opções.");
+      } else if (nivelDeConfianca >= 5) {
+        System.out.println("Dica: Qual estrutura é mais eficiente para múltiplas escolhas?");
+      } else {
+        System.out.println("Sem dicas disponíveis. Confie na sua lógica.");
+      }
+
+      System.out.println("Tentativas restantes: " + tentativasRestantes);
+    }
+  }
+
   public void start() {
     List<Interacao> interacoes = ObterInteracoes.obter("data/interacoes.json");
 
@@ -716,20 +946,26 @@ public class Game {
     InteracaoPadrao quartaInteracao = new InteracaoPadrao(interacao4);
     InteracaoPadrao quintaInteracao = new InteracaoPadrao(interacao5);
 
-    // primeiraInteracao.executar();
-    // segundaInteracao.executar();
-    // terceiraInteracao.executar();
-    // quartaInteracao.executar();
-    // quintaInteracao.executar();
+    primeiraInteracao.executar();
+    segundaInteracao.executar();
+    terceiraInteracao.executar();
+    quartaInteracao.executar();
+    quintaInteracao.executar();
 
     Execucao tutorial = new TutorialDesafio1();
     Execucao tutorial2 = new TutorialDesafio2();
+    Execucao tutorial3 = new TutorialDesafio3();
     Execucao desafio1 = new Desafio1();
     Execucao desafio2 = new Desafio2();
+    Execucao desafio3 = new Desafio3();
 
-    // tutorial.executar();
-    // desafio1.executar();
+    tutorial.executar();
+    desafio1.executar();
+
     tutorial2.executar();
     desafio2.executar();
+    
+    tutorial3.executar();
+    desafio3.executar();
   }
 }
