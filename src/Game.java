@@ -453,6 +453,111 @@ public class Game {
     }
   }
 
+  class Desafio2 implements Execucao {
+    private final Scanner entrada = new Scanner(System.in);
+
+    @Override
+    public void executar() {
+      LimparTerminal.limpar();
+
+      System.out.println("\nDesafio 2: Descriptografar o arquivo com o nome dos seus pais.");
+      System.out.println("""
+          Contexto: Você encontrou um arquivo criptografado com informações sobre seus pais.
+          Para descriptografar, é necessário garantir que o processo seja executado pelo menos uma vez,
+          mesmo que a condição inicial ainda não seja atendida.
+          """);
+      System.out.println("Dica inicial: Escolha o laço que garante execução ao menos uma vez.");
+
+      String[] alternativas = {
+          "1. while (!arquivoDescriptografado) { System.out.println(\"Tentativa de descriptografia...\"); }",
+          "2. do { System.out.println(\"Tentativa de descriptografia...\"); } while (!arquivoDescriptografado);",
+          "3. for (int i = 0; i < 3; i++) { System.out.println(\"Tentativa de descriptografia...\"); }"
+      };
+
+      int tentativasMaximas = calcularTentativas();
+      int tentativas = 0;
+      boolean acertou = false;
+
+      while (tentativas < tentativasMaximas && !acertou) {
+        System.out.println("\nNível de confiança: " + nivelDeConfianca);
+        System.out.println("\nAlternativas:");
+        for (String alternativa : alternativas) {
+          System.out.println(alternativa);
+        }
+
+        System.out.print("\nQual código você escolhe?: ");
+        int escolha = entrada.nextInt();
+
+        if (escolha == 2) {
+          acertou = true;
+          simularDescriptografia();
+          System.out.println("\nCorreto! O laço 'do/while' garantiu que o código fosse executado pelo menos uma vez.");
+          System.out.println("Arquivo descriptografado com sucesso!");
+          System.out.println("Você encontra os nomes: Sophia e Elijah.");
+        } else {
+          tentativas++;
+          fornecerFeedback(escolha, tentativasMaximas - tentativas);
+
+          if (tentativas == tentativasMaximas) {
+            System.out.println("\nVocê atingiu o limite de tentativas! O desafio falhou.");
+            System.out.println("O arquivo permanece criptografado. Talvez haja outra oportunidade no futuro.");
+          }
+        }
+      }
+
+      if (acertou) {
+        System.out.println("\nParabéns! Você concluiu o desafio com sucesso.");
+      }
+    }
+
+    private int calcularTentativas() {
+      if (nivelDeConfianca >= 7) {
+        System.out.println("\nVocê está muito confiante! Receberá 3 tentativas.");
+        return 3;
+      } else if (nivelDeConfianca >= 5) {
+        System.out.println("\nConfiança estável. Receberá 2 tentativas.");
+        return 2;
+      } else {
+        System.out.println("\nConfiança baixa! Você terá apenas 1 tentativas.");
+        return 1;
+      }
+    }
+
+    private void fornecerFeedback(int escolha, int tentativasRestantes) {
+      if (escolha == 1) {
+        System.out.println(
+            "\nErrado! O 'while' verifica a condição antes de executar, o que não garante a execução inicial.");
+      } else if (escolha == 3) {
+        System.out.println("\nErrado! O 'for' é usado para iterações de contagem fixa, mas não é ideal neste caso.");
+      }
+
+      if (nivelDeConfianca >= 7) {
+        System.out
+            .println("Dica adicional: Pense em um laço que sempre executa o bloco antes de verificar a condição.");
+      } else if (nivelDeConfianca >= 5) {
+        System.out.println("Dica: Qual laço garante execução pelo menos uma vez?");
+      } else {
+        System.out.println("Sem dicas disponíveis. Confie na sua lógica.");
+      }
+
+      System.out.println("Tentativas restantes: " + tentativasRestantes);
+    }
+
+    private void simularDescriptografia() {
+      System.out.println("\nTentativa de descriptografar...");
+      for (int i = 0; i < 10; i++) {
+        try {
+          Thread.sleep(300);
+          System.out.print(".");
+        } catch (InterruptedException e) {
+          Thread.currentThread().interrupt();
+          System.out.println("\nErro na simulação de descriptografia.");
+        }
+      }
+      System.out.println("\nArquivo descriptografado!");
+    }
+  }
+
   public void start() {
     List<Interacao> interacoes = ObterInteracoes.obter("data/interacoes.json");
 
@@ -476,8 +581,10 @@ public class Game {
 
     Execucao tutorial = new TutorialDesafio1();
     Execucao desafio1 = new Desafio1();
+    Execucao desafio2 = new Desafio2();
 
     tutorial.executar();
     desafio1.executar();
+    desafio2.executar();
   }
 }
