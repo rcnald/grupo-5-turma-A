@@ -453,6 +453,149 @@ public class Game {
     }
   }
 
+  public class TutorialDesafio2 implements Execucao {
+
+    @Override
+    public void executar() {
+      Scanner entrada = new Scanner(System.in);
+
+      System.out.println("\n--- Tutorial: Simulando a Descriptografia de Dados ---");
+      System.out.println("""
+          Contexto: No Desafio 2, você precisa simular o processo de descriptografia de um arquivo.
+          Para isso, é necessário escolher o laço de repetição mais adequado para tentar descriptografar
+          até alcançar o resultado esperado ou atingir um limite de tentativas.
+          """);
+
+      boolean continuar = true;
+
+      while (continuar) {
+        System.out.println("Escolha uma alternativa para aprender mais:");
+        System.out.println("1. for-each");
+        System.out.println("2. while");
+        System.out.println("3. do-while");
+        System.out.println("4. Sair do tutorial");
+        System.out.print("Opção: ");
+        int escolha = entrada.nextInt();
+
+        switch (escolha) {
+          case 1:
+            explicarForEach();
+            break;
+
+          case 2:
+            explicarWhile();
+            break;
+
+          case 3:
+            explicarDoWhile();
+            break;
+
+          case 4:
+            System.out.println("\nSaindo do tutorial. Boa sorte no desafio!");
+            continuar = false;
+            break;
+
+          default:
+            System.out.println("\nOpção inválida. Tente novamente.");
+        }
+
+        if (continuar) {
+          System.out.println("\n--- Fim da explicação ---\n");
+        }
+      }
+    }
+
+    private void explicarForEach() {
+      System.out.println("\n--- Alternativa 1: for-each ---");
+      System.out.println("""
+          O 'for-each' é usado para iterar sobre elementos de uma coleção, como arrays ou listas.
+          No entanto, ele não permite alterar variáveis de controle ou interromper a execução de forma dinâmica.
+
+          Sintaxe:
+          for (Tipo elemento : Colecao) {
+              // Operações com elemento
+          }
+          """);
+
+      System.out.println("""
+          No contexto do desafio, o 'for-each' não é ideal porque você precisa de controle
+          total sobre as tentativas de descriptografia.
+          """);
+
+      System.out.println("Dica: Use 'for-each' apenas para processar elementos conhecidos e estáticos.");
+    }
+
+    private void explicarWhile() {
+      System.out.println("\n--- Alternativa 2: while ---");
+      System.out.println("""
+          O 'while' é usado para executar um bloco de código enquanto uma condição for verdadeira.
+          Ele é adequado para situações onde você não sabe quantas vezes o laço precisará ser executado.
+
+          Sintaxe:
+          while (condicao) {
+              // Operações
+          }
+          """);
+
+      System.out.println("Exemplo no contexto do desafio:");
+      System.out.println("""
+          boolean arquivoDescriptografado = false;
+          int tentativa = 0;
+
+          while (!arquivoDescriptografado && tentativa < 5) {
+              System.out.println("Tentativa " + (tentativa + 1) + ": Tentando descriptografar...");
+              tentativa++;
+          }
+          """);
+
+      System.out.println("Resultado:");
+      boolean arquivoDescriptografado = false;
+      int tentativa = 0;
+
+      while (!arquivoDescriptografado && tentativa < 5) {
+        System.out.println("Tentativa " + (tentativa + 1) + ": Tentando descriptografar...");
+        tentativa++;
+      }
+
+      System.out.println("\nVantagem: O 'while' permite controlar a execução com base em condições dinâmicas!");
+    }
+
+    private void explicarDoWhile() {
+      System.out.println("\n--- Alternativa 3: do-while ---");
+      System.out.println("""
+          O 'do-while' é semelhante ao 'while', mas a condição é verificada após a execução do bloco.
+          Isso significa que o código será executado pelo menos uma vez, mesmo que a condição inicial seja falsa.
+
+          Sintaxe:
+          do {
+              // Operações
+          } while (condicao);
+          """);
+
+      System.out.println("Exemplo no contexto do desafio:");
+      System.out.println("""
+          boolean arquivoDescriptografado = false;
+          int tentativa = 0;
+
+          do {
+              System.out.println("Tentativa " + (tentativa + 1) + ": Tentando descriptografar...");
+              tentativa++;
+          } while (!arquivoDescriptografado && tentativa < 5);
+          """);
+
+      boolean arquivoDescriptografado = false;
+      int tentativa = 0;
+
+      do {
+        System.out.println("Tentativa " + (tentativa + 1) + ": Tentando descriptografar...");
+        tentativa++;
+      } while (!arquivoDescriptografado && tentativa < 5);
+
+      System.out.println("\nVantagem: O 'do-while' garante pelo menos uma execução inicial!");
+    }
+
+  }
+
   class Desafio2 implements Execucao {
     private final Scanner entrada = new Scanner(System.in);
 
@@ -573,18 +716,20 @@ public class Game {
     InteracaoPadrao quartaInteracao = new InteracaoPadrao(interacao4);
     InteracaoPadrao quintaInteracao = new InteracaoPadrao(interacao5);
 
-    primeiraInteracao.executar();
-    segundaInteracao.executar();
-    terceiraInteracao.executar();
-    quartaInteracao.executar();
-    quintaInteracao.executar();
+    // primeiraInteracao.executar();
+    // segundaInteracao.executar();
+    // terceiraInteracao.executar();
+    // quartaInteracao.executar();
+    // quintaInteracao.executar();
 
     Execucao tutorial = new TutorialDesafio1();
+    Execucao tutorial2 = new TutorialDesafio2();
     Execucao desafio1 = new Desafio1();
     Execucao desafio2 = new Desafio2();
 
-    tutorial.executar();
-    desafio1.executar();
+    // tutorial.executar();
+    // desafio1.executar();
+    tutorial2.executar();
     desafio2.executar();
   }
 }
