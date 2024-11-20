@@ -849,95 +849,97 @@ public class Game {
     }
   }
 
-  class Desafio3 implements Execucao {
-    private final Scanner entrada = new Scanner(System.in);
+  class Desafio3 implements Execucao { // A classe implementa a interface 'Execucao'.
+    private final Scanner entrada = new Scanner(System.in); // Scanner para entrada de dados do usuário.
 
     @Override
-    public void executar() {
-      LimparTerminal.limpar();
+    public void executar() { // Método principal que executa o desafio.
+        LimparTerminal.limpar(); // Limpa o terminal (implementação externa).
 
-      System.out.println("\nDesafio 3: Perguntar a Taka sobre o acidente.");
-      System.out.println("""
-          Contexto: Você decide confrontar Taka sobre o acidente que tirou a vida dos seus pais.
-          Para isso, é necessário usar o código ideal para estruturar múltiplas opções de forma clara e eficiente.
-          """);
-      System.out.println("Dica inicial: Qual estrutura de controle é mais adequada para múltiplas escolhas?");
+        System.out.println("\nDesafio 3: Perguntar a Taka sobre o acidente."); // Introdução do desafio.
+        System.out.println("""
+            Contexto: Você decide confrontar Taka sobre o acidente que tirou a vida dos seus pais.
+            Para isso, é necessário usar o código ideal para estruturar múltiplas opções de forma clara e eficiente.
+            """);
+        System.out.println("Dica inicial: Qual estrutura de controle é mais adequada para múltiplas escolhas?");
 
-      String[] alternativas = {
-          "1. if (escolha == 1) { ... } else if (escolha == 2) { ... }",
-          "2. switch (escolha) { case 1: ...; break; }",
-          "3. for (int i = 0; i < perguntas.length; i++) { ... }"
-      };
+        // Lista de alternativas possíveis.
+        String[] alternativas = {
+            "1. if (escolha == 1) { ... } else if (escolha == 2) { ... }",
+            "2. switch (escolha) { case 1: ...; break; }",
+            "3. for (int i = 0; i < perguntas.length; i++) { ... }"
+        };
 
-      int tentativasMaximas = calcularTentativas();
-      int tentativas = 0;
-      boolean acertou = false;
+        // Calcula o número máximo de tentativas baseado no nível de confiança.
+        int tentativasMaximas = calcularTentativas();
+        int tentativas = 0; // Contador de tentativas.
+        boolean acertou = false; // Flag para verificar se o usuário acertou.
 
-      while (tentativas < tentativasMaximas && !acertou) {
-        System.out.println("\nNível de confiança: " + nivelDeConfianca);
-        System.out.println("\nAlternativas:");
-        for (String alternativa : alternativas) {
-          System.out.println(alternativa);
+        while (tentativas < tentativasMaximas && !acertou) { // Loop enquanto houver tentativas e o usuário não acertar.
+            System.out.println("\nNível de confiança: " + nivelDeConfianca); // Mostra o nível de confiança.
+            System.out.println("\nAlternativas:");
+            for (String alternativa : alternativas) { // Exibe todas as alternativas.
+                System.out.println(alternativa);
+            }
+
+            System.out.print("\nQual código você escolhe?: "); // Solicita a escolha do usuário.
+            int escolha = entrada.nextInt(); // Lê a escolha do usuário.
+
+            if (escolha == 2) { // Verifica se a escolha está correta.
+                acertou = true;
+                acertoDesafioTres = true; // Marca o desafio como concluído com sucesso.
+                System.out.println("\nCorreto! O 'switch' permite estruturar opções de forma clara e eficiente.");
+                System.out.println("Taka hesita, mas responde: 'Não sei de nada sobre o acidente.'");
+                nivelDeConfianca += 2; // Incrementa o nível de confiança por acertar.
+            } else { // Caso a escolha esteja errada.
+                tentativas++; // Incrementa o número de tentativas.
+                fornecerFeedback(escolha, tentativasMaximas - tentativas); // Dá feedback ao usuário.
+
+                if (tentativas == tentativasMaximas) { // Se o limite de tentativas for atingido.
+                    System.out.println("\nVocê atingiu o limite de tentativas! O desafio falhou.");
+                    System.out.println("Taka permanece em silêncio. Você perdeu a chance de obter informações.");
+                    nivelDeConfianca -= 1; // Reduz o nível de confiança por falhar.
+                }
+            }
         }
 
-        System.out.print("\nQual código você escolhe?: ");
-        int escolha = entrada.nextInt();
-
-        if (escolha == 2) {
-          acertou = true;
-          acertoDesafioTres = true;
-          System.out.println("\nCorreto! O 'switch' permite estruturar opções de forma clara e eficiente.");
-          System.out.println("Taka hesita, mas responde: 'Não sei de nada sobre o acidente.'");
-          nivelDeConfianca += 2; // Incremento na confiança por acertar.
-        } else {
-          tentativas++;
-          fornecerFeedback(escolha, tentativasMaximas - tentativas);
-
-          if (tentativas == tentativasMaximas) {
-            System.out.println("\nVocê atingiu o limite de tentativas! O desafio falhou.");
-            System.out.println("Taka permanece em silêncio. Você perdeu a chance de obter informações.");
-            nivelDeConfianca -= 1; // Redução na confiança por falhar.
-          }
+        if (acertou) { // Mensagem de conclusão ao acertar.
+            System.out.println("\nParabéns! Você concluiu o desafio com sucesso.");
         }
-      }
-
-      if (acertou) {
-        System.out.println("\nParabéns! Você concluiu o desafio com sucesso.");
-      }
     }
 
-    private int calcularTentativas() {
-      if (nivelDeConfianca >= 7) {
-        System.out.println("\nVocê está muito confiante! Receberá 3 tentativas.");
-        return 3;
-      } else if (nivelDeConfianca >= 5) {
-        System.out.println("\nConfiança estável. Receberá 2 tentativas.");
-        return 2;
-      } else {
-        System.out.println("\nConfiança baixa! Você terá apenas 1 tentativa.");
-        return 1;
-      }
+    private int calcularTentativas() { // Calcula o número de tentativas baseado no nível de confiança.
+        if (nivelDeConfianca >= 7) { // Confiança alta.
+            System.out.println("\nVocê está muito confiante! Receberá 3 tentativas.");
+            return 3;
+        } else if (nivelDeConfianca >= 5) { // Confiança média.
+            System.out.println("\nConfiança estável. Receberá 2 tentativas.");
+            return 2;
+        } else { // Confiança baixa.
+            System.out.println("\nConfiança baixa! Você terá apenas 1 tentativa.");
+            return 1;
+        }
     }
 
-    private void fornecerFeedback(int escolha, int tentativasRestantes) {
-      if (escolha == 1) {
-        System.out.println(
-            "\nErrado! O 'if/else' pode ser usado, mas não é a solução mais clara para múltiplas escolhas.");
-      } else if (escolha == 3) {
-        System.out.println("\nErrado! O 'for' é usado para iterações fixas, mas não é ideal para este caso.");
-      }
+    private void fornecerFeedback(int escolha, int tentativasRestantes) { // Fornece feedback baseado na escolha.
+        if (escolha == 1) { // Feedback para escolha 1.
+            System.out.println("\nErrado! O 'if/else' pode ser usado, mas não é a solução mais clara para múltiplas escolhas.");
+        } else if (escolha == 3) { // Feedback para escolha 3.
+            System.out.println("\nErrado! O 'for' é usado para iterações fixas, mas não é ideal para este caso.");
+        }
 
-      if (nivelDeConfianca >= 7) {
-        System.out.println("Dica adicional: Use uma estrutura que organiza bem várias opções.");
-      } else if (nivelDeConfianca >= 5) {
-        System.out.println("Dica: Qual estrutura é mais eficiente para múltiplas escolhas?");
-      } else {
-        System.out.println("Sem dicas disponíveis. Confie na sua lógica.");
-      }
+        if (nivelDeConfianca >= 7) { // Dica adicional para alta confiança.
+            System.out.println("Dica adicional: Use uma estrutura que organiza bem várias opções.");
+        } else if (nivelDeConfianca >= 5) { // Dica para confiança média.
+            System.out.println("Dica: Qual estrutura é mais eficiente para múltiplas escolhas?");
+        } else { // Sem dicas para confiança baixa.
+            System.out.println("Sem dicas disponíveis. Confie na sua lógica.");
+        }
 
-      System.out.println("Tentativas restantes: " + tentativasRestantes);
+        System.out.println("Tentativas restantes: " + tentativasRestantes); // Mostra o número de tentativas restantes.
     }
-  }
+}
+
 
   public void start() {
     List<Interacao> interacoes = ObterInteracoes.obter("data/interacoes.json");
