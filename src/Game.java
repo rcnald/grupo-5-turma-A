@@ -1163,6 +1163,227 @@ public class Game {
     }
   }
 
+  public class TutorialDesafio5 implements Execucao {
+
+    @Override
+    public void executar() {
+      Scanner entrada = new Scanner(System.in);
+
+      System.out.println("\n--- Tutorial: Escolhendo o Loop Correto para Desativar Taka ---");
+      System.out.println("""
+          Contexto: No Desafio 5, você precisa desativar o sistema de Taka utilizando um laço de repetição.
+          Este tutorial explicará diferentes tipos de laços e como eles podem ser usados
+          para resolver o problema de forma eficiente.
+          """);
+
+      boolean continuar = true;
+
+      while (continuar) {
+        System.out.println("Escolha um tópico para explorar:");
+        System.out.println("1. Estrutura 'for'");
+        System.out.println("2. Estrutura 'while'");
+        System.out.println("3. Estrutura 'do-while'");
+        System.out.println("4. Sair do tutorial");
+        System.out.print("Opção: ");
+        int escolha = entrada.nextInt();
+
+        switch (escolha) {
+          case 1:
+            explicarFor();
+            break;
+
+          case 2:
+            explicarWhile();
+            break;
+
+          case 3:
+            explicarDoWhile();
+            break;
+
+          case 4:
+            System.out.println("\nSaindo do tutorial. Boa sorte no desafio!");
+            continuar = false;
+            break;
+
+          default:
+            System.out.println("\nOpção inválida. Tente novamente.");
+        }
+
+        if (continuar) {
+          System.out.println("\n--- Fim da explicação ---\n");
+        }
+      }
+    }
+
+    private void explicarFor() {
+      System.out.println("\n--- Estrutura 1: for ---");
+      System.out.println("""
+          A estrutura 'for' é ideal para cenários em que o número de iterações é conhecido antecipadamente.
+          No caso de desativar Taka, essa estrutura não é ideal, pois a condição para parar o laço é dinâmica
+          e depende de um evento externo (como o código correto ser inserido).
+
+          Sintaxe:
+          for (inicializacao; condicao; incremento) {
+              // Código a ser executado
+          }
+          """);
+
+      System.out.println("Exemplo inadequado no contexto de desativar Taka:");
+      System.out.println("""
+          for (int i = 0; i < 10; i++) {
+              tentarDesativar();
+          }
+          """);
+
+      System.out.println("Limitação: 'for' não verifica condições dinâmicas entre as iterações.");
+    }
+
+    private void explicarWhile() {
+      System.out.println("\n--- Estrutura 2: while ---");
+      System.out.println("""
+          A estrutura 'while' é útil para cenários onde a condição é verificada antes de cada iteração.
+          No caso de desativar Taka, ela poderia ser usada, mas tem uma limitação: o laço não garante
+          que a tentativa de desativação será executada pelo menos uma vez.
+
+          Sintaxe:
+          while (condicao) {
+              // Código a ser executado enquanto a condição for verdadeira
+          }
+          """);
+
+      System.out.println("Exemplo para desativar Taka:");
+      System.out.println("""
+          while (!codigo.equals("EXIT")) {
+              tentarDesativar();
+          }
+          """);
+
+      System.out
+          .println("Limitação: O código dentro do 'while' pode nunca ser executado se a condição inicial for falsa.");
+    }
+
+    private void explicarDoWhile() {
+      System.out.println("\n--- Estrutura 3: do-while ---");
+      System.out.println("""
+          A estrutura 'do-while' é ideal quando precisamos garantir que o bloco de código seja executado
+          pelo menos uma vez, mesmo que a condição inicialmente seja falsa.
+          No caso de desativar Taka, ela é a escolha mais apropriada.
+
+          Sintaxe:
+          do {
+              // Código a ser executado
+          } while (condicao);
+          """);
+
+      System.out.println("Exemplo correto para desativar Taka:");
+      System.out.println("""
+          do {
+              tentarDesativar();
+          } while (!codigo.equals("EXIT"));
+          """);
+
+      System.out.println(
+          "Vantagem: 'do-while' garante que a tentativa de desativação ocorra pelo menos uma vez antes de verificar a condição.");
+    }
+  }
+
+  class Desafio5 implements Execucao {
+    private final Scanner entrada = new Scanner(System.in);
+
+    @Override
+    public void executar() {
+      LimparTerminal.limpar();
+
+      System.out.println("\nDesafio 5: Desativar o sistema de Taka.");
+      System.out.println(
+          """
+              Contexto: Taka, o robô, está tentando proteger os sistemas críticos.
+              Sua missão é desativar temporariamente o sistema usando o loop mais adequado
+              para garantir ao menos uma tentativa de desativação.
+              """);
+
+      String[] alternativas = {
+          "1. while (!codigo.equals(\"EXIT\")) { tentarDesativar(); }",
+          "2. for (int i = 0; i < 10; i++) { tentarDesativar(); }",
+          "3. do { tentarDesativar(); } while (!codigo.equals(\"EXIT\"));"
+      };
+
+      int tentativasMaximas = calcularTentativas();
+      int tentativas = 0;
+      boolean acertou = false;
+
+      while (tentativas < tentativasMaximas && !acertou) {
+        System.out.println("\nNível de confiança: " + nivelDeConfianca);
+        System.out.println("\nAlternativas:");
+        for (String alternativa : alternativas) {
+          System.out.println(alternativa);
+        }
+
+        System.out.print("\nQual código você escolhe? ");
+        int escolha = entrada.nextInt();
+
+        if (escolha == 3) {
+          acertou = true;
+          acertoDesafioCinco = true;
+          System.out.println("""
+              \nCorreto! O 'do-while' garante que o bloco de código seja executado pelo menos uma vez,
+              antes de avaliar a condição. Taka foi temporariamente desativado, e você tem acesso aos sistemas!
+              """);
+          mostrarAcessoSistemas();
+        } else {
+          tentativas++;
+          fornecerFeedback(escolha, tentativasMaximas - tentativas);
+
+          if (tentativas == tentativasMaximas) {
+            System.out.println("\nVocê atingiu o limite de tentativas! O sistema de Taka continua ativo.");
+          }
+        }
+      }
+
+      if (acertou) {
+        System.out.println("\nParabéns! Você concluiu o desafio com sucesso.");
+      }
+    }
+
+    private int calcularTentativas() {
+      if (nivelDeConfianca >= 7) {
+        System.out.println("\nVocê está muito confiante! Receberá 3 tentativas.");
+        return 3;
+      } else if (nivelDeConfianca >= 5) {
+        System.out.println("\nConfiança estável. Receberá 2 tentativas.");
+        return 2;
+      } else {
+        System.out.println("\nConfiança baixa! Você terá apenas 1 tentativa.");
+        return 1;
+      }
+    }
+
+    private void fornecerFeedback(int escolha, int tentativasRestantes) {
+      if (escolha == 1) {
+        System.out.println(
+            "\nErrado! 'while' só executa se a condição inicial for verdadeira, o que pode não funcionar aqui.");
+      } else if (escolha == 2) {
+        System.out.println("\nErrado! 'for' não é ideal quando o número de iterações é desconhecido.");
+      }
+
+      if (nivelDeConfianca >= 7) {
+        System.out.println("Dica adicional: Qual laço sempre executa o bloco pelo menos uma vez?");
+      } else if (nivelDeConfianca >= 5) {
+        System.out.println("Dica: Considere um laço que garante uma tentativa antes de verificar a condição.");
+      } else {
+        System.out.println("Sem dicas disponíveis. Boa sorte!");
+      }
+
+      System.out.println("Tentativas restantes: " + tentativasRestantes);
+    }
+
+    private void mostrarAcessoSistemas() {
+      System.out.println("\n--- Sistemas Acessados ---");
+      System.out.println("1. Controle de navegação desativado.");
+      System.out.println("2. Logs de atividades: \"Protocolo X em andamento. Prioridade máxima.\"");
+    }
+  }
+
   public void start() {
     List<Interacao> interacoes = ObterInteracoes.obter("data/interacoes.json");
 
@@ -1188,10 +1409,12 @@ public class Game {
     Execucao tutorial2 = new TutorialDesafio2();
     Execucao tutorial3 = new TutorialDesafio3();
     Execucao tutorial4 = new TutorialDesafio4();
+    Execucao tutorial5 = new TutorialDesafio5();
     Execucao desafio1 = new Desafio1();
     Execucao desafio2 = new Desafio2();
     Execucao desafio3 = new Desafio3();
     Execucao desafio4 = new Desafio4();
+    Execucao desafio5 = new Desafio5();
 
     // tutorial.executar();
     // desafio1.executar();
@@ -1201,8 +1424,11 @@ public class Game {
 
     // tutorial3.executar();
     // desafio3.executar();
-    
-    tutorial4.executar();
-    desafio4.executar();
+
+    // tutorial4.executar();
+    // desafio4.executar();
+
+    tutorial5.executar();
+    desafio5.executar();
   }
 }
