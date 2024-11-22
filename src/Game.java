@@ -27,14 +27,56 @@ public class Game {
 
   Scanner entrada = new Scanner(System.in);
 
-  public class InteracaoPadrao implements Execucao {
-    private String pergunta;
-    private String[] alternativas;
-    private Object[] respostas;
-    private int[] efeitoColateralDeConfianca;
-    private int alternativasValidas;
-    private boolean respostaDadaPeloUsuarioExiste;
+  public void menu() {
+    boolean respostaExiste = false;
 
+    do {
+      LimparTerminal.limpar(); // Limpa o terminal para melhor visualização.
+      System.out.println("Bem vindo ao Cyberlife");
+      System.out.println("1) - Instrucoes");
+      System.out.println("2) - Jogar");
+      System.out.println("3) - Créditos");
+      System.out.println("4) - Sair");
+
+      System.out.print("Escolha uma opcao: ");
+
+      obterRespostaDoJogadorNoMenu(); // Obtém a escolha do jogador.
+
+      switch (resposta) {
+        case "1":
+          respostaExiste = true;
+          this.instructions(); // Exibe as instruções do jogo.
+          break;
+        case "2":
+          respostaExiste = true;
+          this.start(); // Inicia o jogo.
+          break;
+        case "3":
+          respostaExiste = true;
+          this.credits(); // Exibe os créditos.
+          break;
+        case "4":
+          respostaExiste = true;
+          System.out.println("Saindo do jogo...");
+          break;
+        default:
+          respostaExiste = false; // Resposta inválida.
+          System.out.println("Opção inválida. Tente novamente.");
+          break;
+      }
+    } while (!respostaExiste); // Repete até uma opção válida ser escolhida.
+  }
+
+  public class InteracaoPadrao implements Execucao {
+    private String pergunta; // A pergunta exibida ao jogador.
+    private String[] alternativas; // Alternativas de resposta disponíveis para o jogador.
+    private Object[] respostas; // Respostas detalhadas vinculadas a cada alternativa.
+    private int[] efeitoColateralDeConfianca; // Impacto de cada resposta na confiança do personagem.
+    private int alternativasValidas; // Número total de alternativas válidas.
+    private boolean respostaDadaPeloUsuarioExiste; // Indica se a resposta do jogador é válida.
+
+    // Construtor que inicializa os atributos a partir de uma instância de
+    // Interacao.
     public InteracaoPadrao(Interacao interacao) {
       this.pergunta = interacao.pergunta;
       this.alternativas = interacao.alternativas;
@@ -45,52 +87,51 @@ public class Game {
 
     @Override
     public void executar() {
-
       do {
-        exibirPergunta();
-        exibirAlternativas();
+        exibirPergunta(); // Mostra a pergunta para o jogador.
+        exibirAlternativas(); // Exibe as opções de resposta.
 
-        obterRespostaDoJogador();
+        obterRespostaDoJogador(); // Obtém a resposta do jogador.
 
-        if (respostaIgualMenu()) {
-          confirmarVoltarAoMenu(this);
+        if (respostaIgualMenu()) { // Verifica se o jogador quer retornar ao menu.
+          confirmarVoltarAoMenu(this); // Confirmação antes de voltar ao menu.
           return;
         }
 
-        alternativaEstaValida();
-        mensagemSeAlternativaForInvalida();
-      } while (!respostaDadaPeloUsuarioExiste);
+        alternativaEstaValida(); // Verifica se a resposta é válida.
+        mensagemSeAlternativaForInvalida(); // Mensagem para respostas inválidas.
+      } while (!respostaDadaPeloUsuarioExiste); // Continua até o jogador dar uma resposta válida.
 
-      LimparTerminal.limpar();
+      LimparTerminal.limpar(); // Limpa a tela para melhor legibilidade.
 
-      exibirRespostas();
-      aplicarEfeitosColateraisDeConfianca();
+      exibirRespostas(); // Mostra a resposta associada à alternativa escolhida.
+      aplicarEfeitosColateraisDeConfianca(); // Aplica o impacto da escolha na confiança.
     }
 
     public void exibirPergunta() {
       System.out.println("\n");
-      System.out.println(pergunta);
+      System.out.println(pergunta); // Imprime a pergunta.
     }
 
     public void exibirAlternativas() {
       int indice = 1;
-
       for (String alternativa : alternativas) {
-        System.out.println(indice + ") " + alternativa);
+        System.out.println(indice + ") " + alternativa); // Exibe cada alternativa com um índice numérico.
         indice++;
       }
     }
 
+    // Verifica se a resposta fornecida pelo jogador é válida.
     public void alternativaEstaValida() {
       try {
         int respostaInteira = Integer.parseInt(resposta);
-
         respostaDadaPeloUsuarioExiste = respostaInteira > 0 && respostaInteira <= alternativasValidas;
-      } catch (NumberFormatException e) {
+      } catch (NumberFormatException e) { // Resposta inválida caso não seja um número.
         respostaDadaPeloUsuarioExiste = false;
       }
     }
 
+    // Exibe uma mensagem se a alternativa escolhida for inválida.
     public void mensagemSeAlternativaForInvalida() {
       if (!respostaDadaPeloUsuarioExiste) {
         LimparTerminal.limpar();
@@ -98,10 +139,12 @@ public class Game {
       }
     }
 
+    // Mostra a resposta associada à alternativa escolhida.
     public void exibirRespostas() {
       int respostaInteiraIndice = Integer.parseInt(resposta) - 1;
       Object repostaParaExibir = respostas[respostaInteiraIndice];
 
+      // Verifica se a resposta é condicional, dependendo do nível de confiança.
       if (repostaParaExibir instanceof RespostaCondicional) {
         System.out.println(((RespostaCondicional) repostaParaExibir).respostaBase);
         if (nivelDeConfianca > ((RespostaCondicional) repostaParaExibir).nivelDeConfiancaMinimoParaPrimeiraCondicional) {
@@ -109,59 +152,20 @@ public class Game {
         } else {
           System.out.println(((RespostaCondicional) repostaParaExibir).exibirRespostaCondicionalDois());
         }
-      } else if (repostaParaExibir instanceof String) {
+      } else if (repostaParaExibir instanceof String) { // Resposta simples.
         System.out.println(repostaParaExibir);
       }
     }
 
+    // Ajusta o nível de confiança com base na escolha do jogador.
     public void aplicarEfeitosColateraisDeConfianca() {
       int respostaInteiraIndice = Integer.parseInt(resposta) - 1;
-
       nivelDeConfianca += efeitoColateralDeConfianca[respostaInteiraIndice];
     }
   }
 
-  public void menu() {
-    boolean respostaExiste = false;
-
-    do {
-      LimparTerminal.limpar();
-      System.out.println("Bem vindo ao Cyberlife");
-      System.out.println("1) - Instrucoes");
-      System.out.println("2) - Jogar");
-      System.out.println("3) - Créditos");
-      System.out.println("4) - Sair");
-
-      System.out.print("Escolha uma opcao: ");
-
-      obterRespostaDoJogadorNoMenu();
-
-      switch (resposta) {
-        case "1":
-          respostaExiste = true;
-          this.instructions();
-          break;
-        case "2":
-          respostaExiste = true;
-          this.start();
-          break;
-        case "3":
-          respostaExiste = true;
-          this.credits();
-          break;
-        case "4":
-          respostaExiste = true;
-          System.out.println("Saindo do jogo...");
-          break;
-        default:
-          respostaExiste = false;
-          System.out.println("Opção inválida. Tente novamente.");
-          break;
-      }
-    } while (!respostaExiste);
-  }
-
   public void credits() {
+    // Exibe os créditos do jogo com os nomes dos participantes do projeto.
     System.out.println("Créditos do jogo:");
     System.out.println("- Ronaldo");
     System.out.println("- Weliclene");
@@ -169,73 +173,79 @@ public class Game {
     System.out.println("- Vinicius");
     System.out.println("Obrigado por jogar Cyberlife!");
 
+    // Solicita ao jogador que insira qualquer coisa para voltar ao menu.
     System.out.println("\nDigite qualquer coisa para voltar ao menu");
     obterRespostaDoJogadorNoMenu();
 
+    // Retorna ao menu principal após a entrada do jogador.
     menu();
   }
 
   public void obterRespostaDoJogador() {
+    // Exibe o nível de confiança atual e solicita a resposta do jogador.
     System.out.println("\n");
     System.out.println("Nivel de confianca " + nivelDeConfianca + " \n");
     System.out.println("Digite sua resposta: (Digite 'menu' para voltar ao menu.)");
 
+    // Lê a resposta do jogador somente se ela não for "menu".
     if (!resposta.equalsIgnoreCase("menu")) {
       resposta = entrada.next();
     }
   }
 
   public void obterRespostaDoJogadorNoMenu() {
+    // Lê a entrada do jogador no contexto do menu.
     resposta = entrada.next();
   }
 
   public boolean respostaPositiva(String respostas) {
+    // Verifica se a resposta é afirmativa (sim).
     return respostas.equalsIgnoreCase("s");
   }
 
   public boolean respostaNegativa(String respostas) {
+    // Verifica se a resposta é negativa (não).
     return respostas.equalsIgnoreCase("n");
   }
 
   public void confirmarVoltarAoMenu(Execucao interacao) {
+    // Confirma se o jogador quer voltar ao menu principal.
     if (resposta.equalsIgnoreCase("menu")) {
       boolean respostaExiste = false;
 
       do {
+        // Solicita confirmação do jogador para voltar ao menu.
         System.out.print("Tem certeza que deseja voltar ao menu principal? (s/n): ");
         String confirmacao = entrada.next();
 
         if (respostaPositiva(confirmacao)) {
+          // Se a resposta for "sim", limpa o terminal e retorna ao menu principal.
           LimparTerminal.limpar();
-
           respostaExiste = true;
           resposta = "";
-
           this.menu();
         } else if (respostaNegativa(confirmacao)) {
+          // Se a resposta for "não", retorna à interação em execução.
           LimparTerminal.limpar();
-
           respostaExiste = true;
           resposta = "";
-
           interacao.executar();
         } else {
-
+          // Exibe mensagem de erro para entradas inválidas.
           respostaExiste = false;
-
-          System.out.println("Opção inválida. Tente novamente. verificar se for menu");
-
+          System.out.println("Opção inválida. Tente novamente.");
         }
-      } while (!respostaExiste);
-
+      } while (!respostaExiste); // Continua até o jogador fornecer uma resposta válida.
     }
   }
 
   public boolean respostaIgualMenu() {
+    // Verifica se a resposta do jogador é "menu".
     return resposta.equalsIgnoreCase("menu");
   }
 
   public void instructions() {
+    // Exibe as instruções do jogo, explicando os objetivos, desafios e progressão.
     System.out.println(
         "Objetivo: Nys está em busca de informações ocultas sobre o acidente que matou seus pais. Para progredir, ele precisa superar uma série de desafios de programação que o ajudarão a desbloquear arquivos encriptados, entender comandos ocultos e acessar memórias bloqueadas de Taka.\n");
     System.out.println(
@@ -245,11 +255,12 @@ public class Game {
     System.out.println(
         "Progresso e Recompensas: A cada desafio concluído, você desbloqueia novos fragmentos de informação sobre o acidente e se aproxima da verdade. Resolva os desafios para avançar e explorar novas partes da história.\n");
 
+    // Solicita ao jogador que insira qualquer coisa para voltar ao menu.
     System.out.println("\nDigite qualquer coisa para voltar ao menu");
     obterRespostaDoJogadorNoMenu();
 
+    // Retorna ao menu principal após a entrada do jogador.
     menu();
-
   }
 
   public class TutorialDesafio1 implements Execucao {
@@ -468,8 +479,10 @@ public class Game {
 
     @Override
     public void executar() {
+      // Scanner para entrada de dados pelo usuário
       Scanner entrada = new Scanner(System.in);
 
+      // Introdução ao tutorial
       System.out.println("\n--- Tutorial: Simulando a Descriptografia de Dados ---");
       System.out.println("""
           Contexto: No Desafio 2, você precisa simular o processo de descriptografia de um arquivo.
@@ -477,45 +490,56 @@ public class Game {
           até alcançar o resultado esperado ou atingir um limite de tentativas.
           """);
 
+      // Variável para controlar se o tutorial deve continuar
       boolean continuar = true;
 
+      // Laço principal do tutorial
       while (continuar) {
+        // Exibe o menu de opções ao usuário
         System.out.println("Escolha uma alternativa para aprender mais:");
         System.out.println("1. for-each");
         System.out.println("2. while");
         System.out.println("3. do-while");
         System.out.println("4. Sair do tutorial");
         System.out.print("Opção: ");
-        int escolha = entrada.nextInt();
+        int escolha = entrada.nextInt(); // Lê a escolha do usuário
 
+        // Processa a escolha do usuário usando um switch
         switch (escolha) {
           case 1:
+            // Explica o uso do for-each
             explicarForEach();
             break;
 
           case 2:
+            // Explica o uso do while
             explicarWhile();
             break;
 
           case 3:
+            // Explica o uso do do-while
             explicarDoWhile();
             break;
 
           case 4:
+            // Sai do tutorial
             System.out.println("\nSaindo do tutorial. Boa sorte no desafio!");
-            continuar = false;
+            continuar = false; // Altera a variável para encerrar o loop
             break;
 
           default:
+            // Mensagem para escolhas inválidas
             System.out.println("\nOpção inválida. Tente novamente.");
         }
 
+        // Exibe uma mensagem se o tutorial continuar
         if (continuar) {
           System.out.println("\n--- Fim da explicação ---\n");
         }
       }
     }
 
+    // Método para explicar o uso do for-each
     private void explicarForEach() {
       System.out.println("\n--- Alternativa 1: for-each ---");
       System.out.println("""
@@ -536,6 +560,7 @@ public class Game {
       System.out.println("Dica: Use 'for-each' apenas para processar elementos conhecidos e estáticos.");
     }
 
+    // Método para explicar o uso do while
     private void explicarWhile() {
       System.out.println("\n--- Alternativa 2: while ---");
       System.out.println("""
@@ -548,6 +573,7 @@ public class Game {
           }
           """);
 
+      // Mostra um exemplo prático no contexto do desafio
       System.out.println("Exemplo no contexto do desafio:");
       System.out.println("""
           boolean arquivoDescriptografado = false;
@@ -559,7 +585,7 @@ public class Game {
           }
           """);
 
-      System.out.println("Resultado:");
+      // Simula a execução do exemplo
       boolean arquivoDescriptografado = false;
       int tentativa = 0;
 
@@ -571,6 +597,7 @@ public class Game {
       System.out.println("\nVantagem: O 'while' permite controlar a execução com base em condições dinâmicas!");
     }
 
+    // Método para explicar o uso do do-while
     private void explicarDoWhile() {
       System.out.println("\n--- Alternativa 3: do-while ---");
       System.out.println("""
@@ -583,6 +610,7 @@ public class Game {
           } while (condicao);
           """);
 
+      // Mostra um exemplo prático no contexto do desafio
       System.out.println("Exemplo no contexto do desafio:");
       System.out.println("""
           boolean arquivoDescriptografado = false;
@@ -594,6 +622,7 @@ public class Game {
           } while (!arquivoDescriptografado && tentativa < 5);
           """);
 
+      // Simula a execução do exemplo
       boolean arquivoDescriptografado = false;
       int tentativa = 0;
 
@@ -604,7 +633,6 @@ public class Game {
 
       System.out.println("\nVantagem: O 'do-while' garante pelo menos uma execução inicial!");
     }
-
   }
 
   class Desafio2 implements Execucao {

@@ -23,5 +23,5 @@ Após a trágica perda de seus pais, **Nys**, um adolescente isolado, encontra c
 - [x] Deve ser utilizado arrays ou matrizes.
 - [x] Deve ser utilizado métodos.
 - [x] O menu deve ter essas opções "Instruções", "Jogar", "Créditos" e "Sair".
-- [ ] Deve ter aleatoriedade.
-- [ ] Deve ter comentários explicativos no código.
+- [x] Deve ter aleatoriedade.
+- [x] Deve ter comentários explicativos no código.
