@@ -12,10 +12,6 @@ interface Execucao {
   void executar();
 }
 
-// TODO: Fazer desafios, refatorar metodos de Game para conversar melhor com as
-// interacoes e furuta Classe Desafio
-// Implementar tutorias
-
 public class Game {
   private String resposta = "";
   private int nivelDeConfianca = 5;
@@ -29,6 +25,7 @@ public class Game {
 
   public void menu() {
     boolean respostaExiste = false;
+    nivelDeConfianca = 5;
 
     do {
       LimparTerminal.limpar(); // Limpa o terminal para melhor visualização.
@@ -45,15 +42,15 @@ public class Game {
       switch (resposta) {
         case "1":
           respostaExiste = true;
-          this.instructions(); // Exibe as instruções do jogo.
+          instructions(); // Exibe as instruções do jogo.
           break;
         case "2":
           respostaExiste = true;
-          this.start(); // Inicia o jogo.
+          start(); // Inicia o jogo.
           break;
         case "3":
           respostaExiste = true;
-          this.credits(); // Exibe os créditos.
+          credits(); // Exibe os créditos.
           break;
         case "4":
           respostaExiste = true;
@@ -223,7 +220,7 @@ public class Game {
           LimparTerminal.limpar();
           respostaExiste = true;
           resposta = "";
-          this.menu();
+          menu();
         } else if (respostaNegativa(confirmacao)) {
           // Se a resposta for "não", retorna à interação em execução.
           LimparTerminal.limpar();
@@ -1418,6 +1415,22 @@ public class Game {
     }
   }
 
+  public void mostrarResultadoFinal() {
+    int acertos = 0;
+
+    // Verifica cada booleano e incrementa o contador se for true
+    if (acertoDesafioUm) acertos++;
+    if (acertoDesafioDois) acertos++;
+    if (acertoDesafioTres) acertos++;
+    if (acertoDesafioQuatro) acertos++;
+    if (acertoDesafioCinco) acertos++;
+
+    // Exibe os resultados
+    System.out.println("\n--- Resultado Final ---");
+    System.out.println("Total de acertos: " + acertos + " de 5");
+    System.out.println("Nível de confiança: " + nivelDeConfianca);
+}
+
   public void start() {
     List<Interacao> interacoes = ObterInteracoes.obter("data/interacoes.json");
 
@@ -1469,5 +1482,7 @@ public class Game {
 
     tutorial5.executar();
     desafio5.executar();
+
+    mostrarResultadoFinal();
   }
 }
