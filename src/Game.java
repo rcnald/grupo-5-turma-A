@@ -68,6 +68,7 @@ public class Game {
     }
 
     public void exibirPergunta() {
+      System.out.println("\n");
       System.out.println(pergunta);
     }
 
@@ -375,9 +376,9 @@ public class Game {
     public void executar() {
       LimparTerminal.limpar();
 
-      System.out.println("\nDesafio 1: Tentar se lembrar de seu passado.");
+      System.out.println("\nRevisar memórias do passado.");
       System.out.println("""
-          Contexto: Você está tentando acessar memórias do passado armazenadas em seu subconsciente.
+          Você está tentando acessar memórias do passado armazenadas em seu subconsciente.
           Seu objetivo é revisar essas memórias usando o laço de repetição correto.
           """);
 
@@ -609,12 +610,11 @@ public class Game {
     public void executar() {
       LimparTerminal.limpar();
 
-      System.out.println("\nDesafio 2: Descriptografar o arquivo com o nome dos seus pais.");
-      System.out.println("""
-          Contexto: Você encontrou um arquivo criptografado com informações sobre seus pais.
-          Para descriptografar, é necessário garantir que o processo seja executado pelo menos uma vez,
-          mesmo que a condição inicial ainda não seja atendida.
-          """);
+      System.out.println("\nDescriptografar o arquivo com o nome dos seus pais.");
+      System.out.println(
+          """
+              Você encontrou um arquivo criptografado com informações sobre seus pais. Para descriptografar, é necessário garantir que o processo seja executado pelo menos uma vez, mesmo que a condição inicial ainda não seja atendida.
+              """);
       System.out.println("Dica inicial: Escolha o laço que garante execução ao menos uma vez.");
 
       String[] alternativas = {
@@ -856,9 +856,9 @@ public class Game {
     public void executar() { // Método principal que executa o desafio.
       LimparTerminal.limpar(); // Limpa o terminal (implementação externa).
 
-      System.out.println("\nDesafio 3: Perguntar a Taka sobre o acidente."); // Introdução do desafio.
+      System.out.println("\nEstruturar múltiplas opções para confrontar Taka"); // Introdução do desafio.
       System.out.println("""
-          Contexto: Você decide confrontar Taka sobre o acidente que tirou a vida dos seus pais.
+          Você decide confrontar Taka sobre o acidente que tirou a vida dos seus pais.
           Para isso, é necessário usar o código ideal para estruturar múltiplas opções de forma clara e eficiente.
           """);
       System.out.println("Dica inicial: Qual estrutura de controle é mais adequada para múltiplas escolhas?");
@@ -1073,10 +1073,10 @@ public class Game {
     public void executar() {
       LimparTerminal.limpar();
 
-      System.out.println("\nDesafio 4: Hackear as informações do robô.");
+      System.out.println("\nHackear as informações do robô.");
       System.out.println(
           """
-              Contexto: Taka, o robô, protege informações confidenciais sobre o acidente que matou seus pais.
+              Taka, o robô, protege informações confidenciais sobre o acidente que matou seus pais.
               Seu objetivo é encontrar a senha correta para acessar esses dados. Escolha o loop mais adequado para implementar a lógica de tentativa e erro.
               """);
 
@@ -1294,10 +1294,10 @@ public class Game {
     public void executar() {
       LimparTerminal.limpar();
 
-      System.out.println("\nDesafio 5: Desativar o sistema de Taka.");
+      System.out.println("\nDesativar o sistema de Taka.");
       System.out.println(
           """
-              Contexto: Taka, o robô, está tentando proteger os sistemas críticos.
+              Taka, o robô, está tentando proteger os sistemas críticos.
               Sua missão é desativar temporariamente o sistema usando o loop mais adequado
               para garantir ao menos uma tentativa de desativação.
               """);
@@ -1399,34 +1399,39 @@ public class Game {
     InteracaoPadrao quartaInteracao = new InteracaoPadrao(interacao4);
     InteracaoPadrao quintaInteracao = new InteracaoPadrao(interacao5);
 
-    // primeiraInteracao.executar();
-    // segundaInteracao.executar();
-    // terceiraInteracao.executar();
-    // quartaInteracao.executar();
-    // quintaInteracao.executar();
-
     Execucao tutorial = new TutorialDesafio1();
     Execucao tutorial2 = new TutorialDesafio2();
     Execucao tutorial3 = new TutorialDesafio3();
     Execucao tutorial4 = new TutorialDesafio4();
     Execucao tutorial5 = new TutorialDesafio5();
+
     Execucao desafio1 = new Desafio1();
     Execucao desafio2 = new Desafio2();
     Execucao desafio3 = new Desafio3();
     Execucao desafio4 = new Desafio4();
     Execucao desafio5 = new Desafio5();
 
-    // tutorial.executar();
-    // desafio1.executar();
+    primeiraInteracao.executar();
 
-    // tutorial2.executar();
-    // desafio2.executar();
+    tutorial.executar();
+    desafio1.executar();
 
-    // tutorial3.executar();
-    // desafio3.executar();
+    segundaInteracao.executar();
 
-    // tutorial4.executar();
-    // desafio4.executar();
+    tutorial2.executar();
+    desafio2.executar();
+
+    terceiraInteracao.executar();
+
+    tutorial3.executar();
+    desafio3.executar();
+
+    quartaInteracao.executar();
+
+    tutorial4.executar();
+    desafio4.executar();
+
+    quintaInteracao.executar();
 
     tutorial5.executar();
     desafio5.executar();

@@ -7,8 +7,7 @@
         "Desconversar e observar a reação de Taka.",
         "Questionar Taka sobre suas ações recentes."
       ],
-      "respostas"
-: [
+      "respostas": [
         "Você responde positivamente, mas continua alerta. Taka parece satisfeito e não percebe sua desconfiança.",
         "Você desconversa, mas percebe que Taka analisa você com mais atenção do que o habitual.",
         {
