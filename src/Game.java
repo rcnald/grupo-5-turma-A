@@ -284,21 +284,21 @@ public class Game {
         System.out.println("3. do-while");
         System.out.println("4. Sair do tutorial");
         System.out.print("Opção: ");
-        int escolha = entrada.nextInt();
+        String escolha = entrada.next();
 
         switch (escolha) {
-          case 1:
+          case "1":
             explicarForEach();
             break;
 
-          case 2:
+          case "2":
             explicarWhile();
             break;
 
-          case 3:
+          case "3":
             explicarDoWhile();
             break;
-          case 4:
+          case "4":
             System.out.println("\nSaindo do tutorial. Boa sorte no desafio!");
             continuar = false;
             break;
@@ -385,7 +385,7 @@ public class Game {
   }
 
   class Desafio1 implements Execucao {
-    private final Scanner entrada = new Scanner(System.in);
+    private Scanner entrada = new Scanner(System.in);
 
     @Override
     public void executar() {
@@ -414,10 +414,10 @@ public class Game {
           System.out.println(alternativa);
         }
 
-        System.out.print("\nQual código você escolhe?");
-        int escolha = entrada.nextInt();
+        System.out.print("\nQual código você escolhe?\n");
+        String escolha = entrada.next();
 
-        if (escolha == 1) {
+        if (escolha.equalsIgnoreCase("1")) {
           acertou = true;
           acertoDesafioUm = true;
           System.out.println("\nCorreto! Você usou um 'for-each' para explorar as memórias.");
@@ -456,10 +456,10 @@ public class Game {
       }
     }
 
-    private void fornecerFeedback(int escolha, int tentativasRestantes) {
-      if (escolha == 2) {
+    private void fornecerFeedback(String escolha, int tentativasRestantes) {
+      if (escolha.equalsIgnoreCase("2")) {
         System.out.println("\nErrado! 'while' é útil para condições genéricas, mas não é ideal aqui.");
-      } else if (escolha == 3) {
+      } else if (escolha.equalsIgnoreCase("3")) {
         System.out.println("\nErrado! 'do-while' executa ao menos uma vez, mas não é prático para este caso.");
       }
 
@@ -502,26 +502,26 @@ public class Game {
         System.out.println("3. do-while");
         System.out.println("4. Sair do tutorial");
         System.out.print("Opção: ");
-        int escolha = entrada.nextInt(); // Lê a escolha do usuário
+        String escolha = entrada.next(); // Lê a escolha do usuário
 
         // Processa a escolha do usuário usando um switch
         switch (escolha) {
-          case 1:
+          case "1":
             // Explica o uso do for-each
             explicarForEach();
             break;
 
-          case 2:
+          case "2":
             // Explica o uso do while
             explicarWhile();
             break;
 
-          case 3:
+          case "3":
             // Explica o uso do do-while
             explicarDoWhile();
             break;
 
-          case 4:
+          case "4":
             // Sai do tutorial
             System.out.println("\nSaindo do tutorial. Boa sorte no desafio!");
             continuar = false; // Altera a variável para encerrar o loop
@@ -636,7 +636,7 @@ public class Game {
   }
 
   class Desafio2 implements Execucao {
-    private final Scanner entrada = new Scanner(System.in);
+    private Scanner entrada = new Scanner(System.in);
 
     @Override
     public void executar() {
@@ -667,9 +667,9 @@ public class Game {
         }
 
         System.out.print("\nQual código você escolhe?: ");
-        int escolha = entrada.nextInt();
+        String escolha = entrada.next();
 
-        if (escolha == 2) {
+        if (escolha.equalsIgnoreCase("2")) {
           acertou = true;
           acertoDesafioDois = true;
           simularDescriptografia();
@@ -705,11 +705,11 @@ public class Game {
       }
     }
 
-    private void fornecerFeedback(int escolha, int tentativasRestantes) {
-      if (escolha == 1) {
+    private void fornecerFeedback(String escolha, int tentativasRestantes) {
+      if (escolha.equalsIgnoreCase("1")) {
         System.out.println(
             "\nErrado! O 'while' verifica a condição antes de executar, o que não garante a execução inicial.");
-      } else if (escolha == 3) {
+      } else if (escolha.equalsIgnoreCase("3")) {
         System.out.println("\nErrado! O 'for' é usado para iterações de contagem fixa, mas não é ideal neste caso.");
       }
 
@@ -762,22 +762,22 @@ public class Game {
         System.out.println("3. for");
         System.out.println("4. Sair do tutorial");
         System.out.print("Opção: ");
-        int escolha = entrada.nextInt();
+        String escolha = entrada.next();
 
         switch (escolha) {
-          case 1:
+          case "1":
             explicarIfElse();
             break;
 
-          case 2:
+          case "2":
             explicarSwitch();
             break;
 
-          case 3:
+          case "3":
             explicarFor();
             break;
 
-          case 4:
+          case "4":
             System.out.println("\nSaindo do tutorial. Boa sorte no desafio!");
             continuar = false;
             break;
@@ -882,7 +882,7 @@ public class Game {
   }
 
   class Desafio3 implements Execucao { // A classe implementa a interface 'Execucao'.
-    private final Scanner entrada = new Scanner(System.in); // Scanner para entrada de dados do usuário.
+    private Scanner entrada = new Scanner(System.in); // Scanner para entrada de dados do usuário.
 
     @Override
     public void executar() { // Método principal que executa o desafio.
@@ -915,9 +915,9 @@ public class Game {
         }
 
         System.out.print("\nQual código você escolhe?: "); // Solicita a escolha do usuário.
-        int escolha = entrada.nextInt(); // Lê a escolha do usuário.
+        String escolha = entrada.next(); // Lê a escolha do usuário.
 
-        if (escolha == 2) { // Verifica se a escolha está correta.
+        if (escolha.equalsIgnoreCase("2")) { // Verifica se a escolha está correta.
           acertou = true;
           acertoDesafioTres = true; // Marca o desafio como concluído com sucesso.
           System.out.println("\nCorreto! O 'switch' permite estruturar opções de forma clara e eficiente.");
@@ -953,11 +953,11 @@ public class Game {
       }
     }
 
-    private void fornecerFeedback(int escolha, int tentativasRestantes) { // Fornece feedback baseado na escolha.
-      if (escolha == 1) { // Feedback para escolha 1.
+    private void fornecerFeedback(String escolha, int tentativasRestantes) { // Fornece feedback baseado na escolha.
+      if (escolha.equalsIgnoreCase("1")) { // Feedback para escolha 1.
         System.out
             .println("\nErrado! O 'if/else' pode ser usado, mas não é a solução mais clara para múltiplas escolhas.");
-      } else if (escolha == 3) { // Feedback para escolha 3.
+      } else if (escolha.equalsIgnoreCase("3")) { // Feedback para escolha 3.
         System.out.println("\nErrado! O 'for' é usado para iterações fixas, mas não é ideal para este caso.");
       }
 
@@ -995,22 +995,22 @@ public class Game {
         System.out.println("3. Estrutura 'do-while'");
         System.out.println("4. Sair do tutorial");
         System.out.print("Opção: ");
-        int escolha = entrada.nextInt();
+        String escolha = entrada.next();
 
         switch (escolha) {
-          case 1:
+          case "1":
             explicarFor();
             break;
 
-          case 2:
+          case "2":
             explicarWhile();
             break;
 
-          case 3:
+          case "3":
             explicarDoWhile();
             break;
 
-          case 4:
+          case "4":
             System.out.println("\nSaindo do tutorial. Boa sorte no desafio!");
             continuar = false;
             break;
@@ -1099,7 +1099,7 @@ public class Game {
   }
 
   class Desafio4 implements Execucao {
-    private final Scanner entrada = new Scanner(System.in);
+    private Scanner entrada = new Scanner(System.in);
 
     @Override
     public void executar() {
@@ -1130,9 +1130,9 @@ public class Game {
         }
 
         System.out.print("\nQual código você escolhe? ");
-        int escolha = entrada.nextInt();
+        String escolha = entrada.next();
 
-        if (escolha == 2) {
+        if (escolha.equalsIgnoreCase("2")) {
           acertou = true;
           acertoDesafioQuatro = true;
           System.out.println("""
@@ -1169,10 +1169,10 @@ public class Game {
       }
     }
 
-    private void fornecerFeedback(int escolha, int tentativasRestantes) {
-      if (escolha == 1) {
+    private void fornecerFeedback(String escolha, int tentativasRestantes) {
+      if (escolha.equalsIgnoreCase("1")) {
         System.out.println("\nErrado! 'for' não é ideal para situações em que o número de iterações é desconhecido.");
-      } else if (escolha == 3) {
+      } else if (escolha.equalsIgnoreCase("3")) {
         System.out.println(
             "\nErrado! 'do-while' executa ao menos uma vez, mas não é adequado para garantir a validação da condição inicialmente.");
       }
@@ -1217,22 +1217,22 @@ public class Game {
         System.out.println("3. Estrutura 'do-while'");
         System.out.println("4. Sair do tutorial");
         System.out.print("Opção: ");
-        int escolha = entrada.nextInt();
+        String escolha = entrada.next();
 
         switch (escolha) {
-          case 1:
+          case "1":
             explicarFor();
             break;
 
-          case 2:
+          case "2":
             explicarWhile();
             break;
 
-          case 3:
+          case "3":
             explicarDoWhile();
             break;
 
-          case 4:
+          case "4":
             System.out.println("\nSaindo do tutorial. Boa sorte no desafio!");
             continuar = false;
             break;
@@ -1320,8 +1320,8 @@ public class Game {
   }
 
   public class Desafio5 implements Execucao {
-    private final Scanner entrada = new Scanner(System.in);
-    private final Random random = new Random();
+    private Scanner entrada = new Scanner(System.in);
+    private Random random = new Random();
 
     @Override
     public void executar() {
@@ -1353,7 +1353,7 @@ public class Game {
         }
 
         System.out.print("\nQual código você escolhe? ");
-        int escolha = entrada.nextInt();
+        String escolha = entrada.next();
 
         // Chance aleatória de sucesso
         if (random.nextInt(10) < 2) { // 20% de chance de sucesso aleatório
@@ -1363,7 +1363,7 @@ public class Game {
               \nAleatoriamente, você conseguiu desativar Taka!
               Taka foi temporariamente desativado, e você tem acesso aos sistemas!
               """);
-        } else if (escolha == 3) {
+        } else if (escolha.equalsIgnoreCase("3")) {
           acertou = true;
           acertoDesafioCinco = true;
           System.out.println("""
@@ -1398,11 +1398,11 @@ public class Game {
       }
     }
 
-    private void fornecerFeedback(int escolha, int tentativasRestantes) {
-      if (escolha == 1) {
+    private void fornecerFeedback(String escolha, int tentativasRestantes) {
+      if (escolha.equalsIgnoreCase("1")) {
         System.out.println(
             "\nErrado! 'while' só executa se a condição inicial for verdadeira, o que pode não funcionar aqui.");
-      } else if (escolha == 2) {
+      } else if (escolha.equalsIgnoreCase("2")) {
         System.out.println("\nErrado! 'for' não é ideal quando o número de iterações é desconhecido.");
       }
 
