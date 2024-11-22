@@ -169,12 +169,10 @@ public class Game {
     System.out.println("- Vinicius");
     System.out.println("Obrigado por jogar Cyberlife!");
 
-    this.obterRespostaDoJogador();
+    System.out.println("\nDigite qualquer coisa para voltar ao menu");
+    obterRespostaDoJogadorNoMenu();
 
-    if (respostaIgualMenu()) {
-      menu();
-    }
-
+    menu();
   }
 
   public void obterRespostaDoJogador() {
@@ -246,6 +244,12 @@ public class Game {
         "Desafios de Programação: Cada desafio ensina um conceito específico de programação. Para cada tarefa, você deverá escrever pequenos códigos que simulam o hacking que Nys faz para acessar novos arquivos.\n");
     System.out.println(
         "Progresso e Recompensas: A cada desafio concluído, você desbloqueia novos fragmentos de informação sobre o acidente e se aproxima da verdade. Resolva os desafios para avançar e explorar novas partes da história.\n");
+
+    System.out.println("\nDigite qualquer coisa para voltar ao menu");
+    obterRespostaDoJogadorNoMenu();
+
+    menu();
+
   }
 
   public class TutorialDesafio1 implements Execucao {
@@ -1287,8 +1291,9 @@ public class Game {
     }
   }
 
-  class Desafio5 implements Execucao {
+  public class Desafio5 implements Execucao {
     private final Scanner entrada = new Scanner(System.in);
+    private final Random random = new Random();
 
     @Override
     public void executar() {
@@ -1322,14 +1327,21 @@ public class Game {
         System.out.print("\nQual código você escolhe? ");
         int escolha = entrada.nextInt();
 
-        if (escolha == 3) {
+        // Chance aleatória de sucesso
+        if (random.nextInt(10) < 2) { // 20% de chance de sucesso aleatório
+          acertou = true;
+          acertoDesafioCinco = true;
+          System.out.println("""
+              \nAleatoriamente, você conseguiu desativar Taka!
+              Taka foi temporariamente desativado, e você tem acesso aos sistemas!
+              """);
+        } else if (escolha == 3) {
           acertou = true;
           acertoDesafioCinco = true;
           System.out.println("""
               \nCorreto! O 'do-while' garante que o bloco de código seja executado pelo menos uma vez,
               antes de avaliar a condição. Taka foi temporariamente desativado, e você tem acesso aos sistemas!
               """);
-          mostrarAcessoSistemas();
         } else {
           tentativas++;
           fornecerFeedback(escolha, tentativasMaximas - tentativas);
@@ -1375,12 +1387,6 @@ public class Game {
       }
 
       System.out.println("Tentativas restantes: " + tentativasRestantes);
-    }
-
-    private void mostrarAcessoSistemas() {
-      System.out.println("\n--- Sistemas Acessados ---");
-      System.out.println("1. Controle de navegação desativado.");
-      System.out.println("2. Logs de atividades: \"Protocolo X em andamento. Prioridade máxima.\"");
     }
   }
 
