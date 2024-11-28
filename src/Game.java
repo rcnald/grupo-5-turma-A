@@ -8,6 +8,7 @@ import lib.interfaces.RespostaCondicional;
 import lib.utils.LimparTerminal;
 import lib.utils.ObterInteracoes;
 
+// interface para indicar que as interacoes e desafio tem um metodo para executalos
 interface Execucao {
   void executar();
 }
@@ -205,6 +206,7 @@ public class Game {
     return respostas.equalsIgnoreCase("n");
   }
 
+  // Passo a interacao que implementa Execucao, para nao dar erro de tipagem.
   public void confirmarVoltarAoMenu(Execucao interacao) {
     // Confirma se o jogador quer voltar ao menu principal.
     if (resposta.equalsIgnoreCase("menu")) {
@@ -1419,19 +1421,37 @@ public class Game {
     int acertos = 0;
 
     // Verifica cada booleano e incrementa o contador se for true
-    if (acertoDesafioUm) acertos++;
-    if (acertoDesafioDois) acertos++;
-    if (acertoDesafioTres) acertos++;
-    if (acertoDesafioQuatro) acertos++;
-    if (acertoDesafioCinco) acertos++;
+    if (acertoDesafioUm)
+      acertos++;
+    if (acertoDesafioDois)
+      acertos++;
+    if (acertoDesafioTres)
+      acertos++;
+    if (acertoDesafioQuatro)
+      acertos++;
+    if (acertoDesafioCinco)
+      acertos++;
 
     // Exibe os resultados
     System.out.println("\n--- Resultado Final ---");
     System.out.println("Total de acertos: " + acertos + " de 5");
     System.out.println("Nível de confiança: " + nivelDeConfianca);
-}
+  }
+
+  public void agradecimentosFinais() {
+    System.out.print("""
+
+            Obrigado por jogar Cyberlife!
+            Sua jornada com Nys foi cheia de mistérios, escolhas difíceis e descobertas.
+            Mas a história ainda não acabou. Nos veremos em breve para a continuação dessa aventura intrigante.
+
+            Até logo, jogador!
+        """);
+
+  }
 
   public void start() {
+    // Obtem as interacoes contidas no arquivo JSON.
     List<Interacao> interacoes = ObterInteracoes.obter("data/interacoes.json");
 
     Interacao interacao1 = interacoes.get(0);
@@ -1439,12 +1459,24 @@ public class Game {
     Interacao interacao3 = interacoes.get(2);
     Interacao interacao4 = interacoes.get(3);
     Interacao interacao5 = interacoes.get(4);
+    Interacao interacao6 = interacoes.get(5);
+    Interacao interacao7 = interacoes.get(6);
+    Interacao interacao8 = interacoes.get(7);
+    Interacao interacao61 = interacoes.get(8);
+    Interacao interacao71 = interacoes.get(9);
+    Interacao interacao81 = interacoes.get(10);
 
     InteracaoPadrao primeiraInteracao = new InteracaoPadrao(interacao1);
     InteracaoPadrao segundaInteracao = new InteracaoPadrao(interacao2);
     InteracaoPadrao terceiraInteracao = new InteracaoPadrao(interacao3);
     InteracaoPadrao quartaInteracao = new InteracaoPadrao(interacao4);
     InteracaoPadrao quintaInteracao = new InteracaoPadrao(interacao5);
+    InteracaoPadrao sextaInteracao = new InteracaoPadrao(interacao6);
+    InteracaoPadrao setimaInteracao = new InteracaoPadrao(interacao7);
+    InteracaoPadrao oitavaInteracao = new InteracaoPadrao(interacao8);
+    InteracaoPadrao sextaAlternativaInteracao = new InteracaoPadrao(interacao61);
+    InteracaoPadrao setimaAlternativaInteracao = new InteracaoPadrao(interacao71);
+    InteracaoPadrao oitavaAlternativaInteracao = new InteracaoPadrao(interacao81);
 
     Execucao tutorial = new TutorialDesafio1();
     Execucao tutorial2 = new TutorialDesafio2();
@@ -1482,6 +1514,18 @@ public class Game {
 
     tutorial5.executar();
     desafio5.executar();
+
+    if (acertoDesafioCinco) {
+      sextaInteracao.executar();
+      setimaInteracao.executar();
+      oitavaInteracao.executar();
+    } else {
+      sextaAlternativaInteracao.executar();
+      setimaAlternativaInteracao.executar();
+      oitavaAlternativaInteracao.executar();
+    }
+
+    agradecimentosFinais();
 
     mostrarResultadoFinal();
   }

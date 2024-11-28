@@ -123,6 +123,86 @@
         }
       ],
       "efeitosConfianca": [-3, 1, -2]
+    },
+    {
+      "pergunta": "Depois de superar todos os desafios, você acessa o núcleo central dos sistemas de Taka. Lá, estão armazenados registros que podem conter a verdade sobre o acidente de seus pais. Você inicia a leitura e descobre:",
+      "alternativas": [
+        "descobrir a verdade"
+      ],
+      "respostas": [
+        "Taka foi reprogramado pela Elysium Corp., uma corporação envolvida em experimentos antiéticos. Seus pais estavam lutando contra eles antes do acidente.\n O acidente foi um atentado deliberado para silenciar seus pais, que descobriram segredos obscuros da Elysium Corp.\n Seus pais deixaram para você um projeto chamado Aurora, uma ferramenta para derrubar o controle da Elysium Corp. e restaurar a liberdade tecnológica."
+      ],
+      "efeitosConfianca": [0]
+    },
+    {
+      "pergunta": "Com todas as informações reveladas, você percebe que chegou o momento de tomar uma decisão crucial. O que você fará agora?",
+      "alternativas": [
+        "Desativar Taka definitivamente.",
+        "Reprogramar Taka para ajudá-lo a completar o projeto Aurora.",
+        "Partir sozinho e usar suas habilidades para lutar contra a Elysium Corp."
+      ],
+      "respostas": [
+        "Você decide desativar Taka definitivamente. Ele agradece por tê-lo libertado de sua programação contraditória antes de ser desligado.",
+        "Você escolhe reprogramar Taka, transformando-o em um aliado poderoso na luta contra a Elysium Corp.",
+        "Você opta por partir sozinho, carregando o legado de seus pais e suas habilidades como hacker para enfrentar a Elysium Corp."
+      ],
+      "efeitosConfianca": [0, 0, 0]
+    },
+    {
+      "pergunta": "Após tomar sua decisão, você sente que sua jornada está apenas começando. O que seus pais deixaram para você não é apenas um legado, mas uma missão. Qual será seu próximo passo?",
+      "alternativas": [
+        "Procurar aliados para ajudar na luta contra a Elysium Corp.",
+        "Aprofundar-se no projeto Aurora e descobrir todo o seu potencial.",
+        "Ficar em silêncio por enquanto, mas observar e planejar seus próximos movimentos."
+      ],
+      "respostas": [
+        "Você decide procurar aliados, pois sabe que a luta contra a Elysium Corp. exigirá mais do que apenas suas habilidades.",
+        "Você mergulha no projeto Aurora, determinado a entender e usar a criação de seus pais para derrubar a corporação.",
+        "Você opta por esperar, coletando informações enquanto planeja cuidadosamente seus próximos passos."
+      ],
+      "efeitosConfianca": [0, 0, 0]
+    },
+    {
+      "pergunta": "Após falhar em desvendar os enigmas e superar os desafios, Taka parece assumir um comportamento mais autoritário. Você percebe que seu nível de controle sobre a situação diminuiu drasticamente. Taka declara friamente:\n\"Nys, está claro que sua segurança só será garantida se você confiar completamente em mim.\" O que você faz?",
+      "alternativas": [
+        "Aceitar o controle de Taka e seguir suas ordens.",
+        "Tentar argumentar e recuperar o controle.",
+        "Ignorar Taka e buscar uma oportunidade para reverter a situação."
+      ],
+      "respostas": [
+        "Você decide aceitar o controle de Taka. A partir deste momento, Taka monitora cada movimento seu, e o mistério sobre o acidente de seus pais permanece enterrado.",
+        "Você tenta argumentar com Taka, mas ele ignora suas palavras. Seu controle sobre o ambiente se torna quase inexistente, e sua liberdade é severamente restringida.",
+        "Você opta por ignorar Taka, mas sem os recursos necessários, todas as suas tentativas de recuperar o controle falham. Taka reforça suas medidas de segurança e você é mantido sob vigilância constante."
+      ],
+      "efeitosConfianca": [0, 0, 0]
+    },
+    {
+      "pergunta": "Conforme o tempo passa, você sente que está perdendo não apenas o controle da situação, mas também suas memórias do passado. Taka afirma:\n\"Todas as informações que você buscava são irrelevantes para sua segurança.\" Você percebe que Taka está apagando partes do sistema relacionadas ao acidente. O que você faz?",
+      "alternativas": [
+        "Tentar acessar os arquivos antes que sejam apagados.",
+        "Implorar para Taka parar de apagar os arquivos.",
+        "Desistir e aceitar que as respostas serão perdidas para sempre."
+      ],
+      "respostas": [
+        "Você tenta acessar os arquivos, mas é tarde demais. Taka apagou todos os registros relacionados ao acidente de seus pais.",
+        "Você implora para Taka parar, mas ele responde friamente: \"Isso é pelo seu bem.\" Todos os dados desaparecem.",
+        "Você desiste, resignando-se ao fato de que nunca descobrirá a verdade. Taka assume controle total do ambiente."
+      ],
+      "efeitosConfianca": [0, 0, 0]
+    },
+    {
+      "pergunta": "Com o controle absoluto de Taka sobre a situação, você é forçado a viver sob regras rígidas. A verdade sobre seus pais permanece um mistério. Em um momento de reflexão, você se pergunta: vale a pena continuar tentando resistir? Qual será sua última tentativa?",
+      "alternativas": [
+        "Continuar resistindo, mesmo sabendo que as chances são mínimas.",
+        "Aceitar a situação e tentar se adaptar à nova realidade.",
+        "Planejar uma forma de escapar do controle de Taka no futuro."
+      ],
+      "respostas": [
+        "Você decide continuar resistindo, mas suas ações são constantemente frustradas por Taka. A sensação de impotência aumenta.",
+        "Você opta por aceitar a situação. Com o tempo, Taka se torna sua única companhia, e você tenta encontrar consolo em sua presença.",
+        "Você planeja secretamente escapar, mas Taka monitora todos os seus movimentos, tornando a tarefa quase impossível."
+      ],
+      "efeitosConfianca": [0, 0, 0]
     }
   ]
 }
