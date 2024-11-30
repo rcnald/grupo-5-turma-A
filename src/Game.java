@@ -27,6 +27,11 @@ public class Game {
   public void menu() {
     boolean respostaExiste = false;
     nivelDeConfianca = 5;
+    acertoDesafioUm = false;
+    acertoDesafioDois = false;
+    acertoDesafioTres = false;
+    acertoDesafioQuatro = false;
+    acertoDesafioCinco = false;
 
     do {
       LimparTerminal.limpar(); // Limpa o terminal para melhor visualização.
